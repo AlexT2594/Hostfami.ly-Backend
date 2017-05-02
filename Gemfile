@@ -24,6 +24,7 @@ gem 'foreman', '~> 0.82.0'
 # Authentication solution
 gem "devise"
 
+
 #Api gems
 gem 'active_model_serializers'
 
