@@ -1,0 +1,35 @@
+stages:
+  - test
+  - deploy
+
+rake-test:
+  stage: test
+  script:
+  - bundle exec rake db:create RAILS_ENV=test
+  - bundle exec rake db:migrate
+  - bundle exec rake test
+
+production:
+  stage: deploy
+  image: ruby:latest
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --strategy=git --app=hostfamily-be --api-key=$HEROKU_API_KEY
+  environment:
+    name: production
+    url: https://hostfamily-be.herokuapp.com/
+  only:
+    - production
+
+staging:
+  stage: deploy
+  image: ruby:latest
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --strategy=git --app=hostfamily-be-staging --api-key=$HEROKU_API_KEY
+  environment:
+    name: staging
+    url: https://hostfamily-be-staging.herokuapp.com/
+  only:
+    - production
+    - staging
