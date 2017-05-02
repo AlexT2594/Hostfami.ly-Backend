@@ -6,9 +6,12 @@ rake-test:
   stage: test
   image: ruby:2.4.1
   script:
-  - bundle install
-  - bundle exec rake db:migrate
-  - bundle exec rake test
+    - apt-get update -qy
+    - apt-get install -y nodejs
+    - bundle install --path /cache
+    - bundle exec rake db:create RAILS_ENV=test
+    - bundle exec rake test
+
 
 production:
   stage: deploy
