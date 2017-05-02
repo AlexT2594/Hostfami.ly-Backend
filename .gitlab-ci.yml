@@ -4,7 +4,7 @@ stages:
 
 rake-test:
   stage: test
-  image: ruby:2.4-alpine
+  image: ruby:2.4.1-alpine
   script:
   - bundle install
   - bundle exec rake db:create RAILS_ENV=test
