@@ -19,7 +19,13 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+# Process manager for applications with multiple components
 gem 'foreman', '~> 0.82.0'
+# Authentication solution
+gem "devise"
+
+#Api gems
+gem 'active_model_serializers'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -38,6 +44,12 @@ gem 'turbolinks', '~> 5'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+end
+
+group :test do
+  gem "rspec-rails", "~> 2.14"
+  gem "factory_girl_rails"
+  gem 'ffaker'
 end
 
 group :development do
