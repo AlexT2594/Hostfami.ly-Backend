@@ -13,7 +13,7 @@ gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+#gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -48,7 +48,7 @@ group :development, :test do
 end
 
 group :test do
-  gem "rspec-rails", "~> 2.14"
+  gem "rspec-rails", "~> 3.5"
   gem "factory_girl_rails"
   gem 'ffaker'
   gem "shoulda-matchers", git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
