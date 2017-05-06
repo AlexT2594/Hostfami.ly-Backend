@@ -17,6 +17,8 @@ module GlacialWoodland68635
       g.stylesheets = false
       g.javascripts = false
       g.helper = false
+      g.template_engine false
+      g.assets = false
     end
 
     config.autoload_paths += %W(\#{config.root}/lib)
