@@ -14,11 +14,10 @@ gem 'puma', '~> 3.0'
 
 # Process manager for applications with multiple components
 gem 'foreman', '~> 0.82.0'
-# Authentication solution
-gem "devise"
 
 gem 'jwt'
 
+gem 'bcrypt'
 
 #Api gems
 gem 'active_model_serializers'
