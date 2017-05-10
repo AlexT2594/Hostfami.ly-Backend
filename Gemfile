@@ -19,6 +19,8 @@ gem 'jwt'
 
 gem 'bcrypt'
 
+gem 'city-state'
+
 #Api gems
 gem 'active_model_serializers'
 
