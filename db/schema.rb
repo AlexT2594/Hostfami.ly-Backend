@@ -10,14 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170506194732) do
+ActiveRecord::Schema.define(version: 20170511084500) do
+
+  create_table "student_about_mes", force: :cascade do |t|
+    t.integer  "height"
+    t.integer  "weight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "student_educational_backgrounds", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "student_health_lifestyles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "student_my_descriptions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "student_passport_infos", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "student_program_preferences", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
+    t.string   "type"
+    t.string   "firstname"
+    t.string   "lastname"
     t.string   "email"
+    t.string   "password_digest"
+    t.string   "country"
+    t.string   "city"
+    t.date     "birthday"
+    t.string   "gender"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.string   "password_digest"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
