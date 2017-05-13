@@ -8,7 +8,7 @@ rake-test:
   script:
     - apt-get update -qy
     - bundle install --path /cache
-    - bundle exec rake db:create RAILS_ENV=test
+    - bundle exec rake db:environment:set RAILS_ENV=test
     - bundle exec rake db:migrate
     - bundle exec rake db:test:prepare
     - bundle exec rspec

@@ -1,18 +1,32 @@
 require 'spec_helper'
 
-describe User do
-  before { @user = FactoryGirl.build(:user) }
+RSpec.describe User, type: :model do
+  subject {
+    described_class.new(firstname: "Pippo", email: "pi@pi.it",
+                        password: "foobar", password_confirmation: "foobar")
+  }
 
-  subject { @user }
+  it "is valid with valid attributes" do
+    expect(subject).to be_valid
+  end
 
-  it { should respond_to(:email) }
-  it { should respond_to(:password) }
-  it { should respond_to(:password_confirmation) }
+  it "should have a name" do
+    subject.firstname = "     "
+    expect(subject).to_not be_valid
+  end
 
-  it { should be_valid }
+  it "should have an email" do
+    subject.email = "   "
+    expect(subject).to_not be_valid
+  end
 
-  it { should validate_presence_of(:email) }
-  it { should validate_uniqueness_of(:email).case_insensitive }
-  it { should validate_confirmation_of(:password) }
-  it { should allow_value('example@domain.com').for(:email) }
+  it "should have a name with less than 51 chars" do
+    subject.firstname = "a" * 51
+    expect(subject).to_not be_valid
+  end
+
+  it "should have an email with less than 255 chars" do
+    subject.firstname = "a" * 255 + "@example.com"
+    expect(subject).to_not be_valid
+  end
 end

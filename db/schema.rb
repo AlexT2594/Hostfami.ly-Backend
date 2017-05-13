@@ -10,34 +10,86 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170506131851) do
+ActiveRecord::Schema.define(version: 20170513133542) do
 
-  create_table "user_profiles", force: :cascade do |t|
-    t.integer "user_id"
-    t.string  "utype"
-    t.string  "name"
-    t.string  "last_name"
-    t.string  "country"
-    t.string  "city"
-    t.string  "gender"
-    t.index ["user_id"], name: "index_user_profiles_on_user_id", unique: true
+  create_table "family_abouts", force: :cascade do |t|
+    t.integer  "family_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["family_id"], name: "index_family_abouts_on_family_id"
+  end
+
+  create_table "student_about_mes", force: :cascade do |t|
+    t.integer  "student_id"
+    t.date     "birthday"
+    t.string   "birthday_country"
+    t.string   "country_living"
+    t.string   "gender"
+    t.integer  "religion_celebrations"
+    t.boolean  "same_religion_hosting"
+    t.integer  "height"
+    t.integer  "weight"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.index ["student_id"], name: "index_student_about_mes_on_student_id"
+  end
+
+  create_table "student_educational_backgrounds", force: :cascade do |t|
+    t.integer  "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_student_educational_backgrounds_on_student_id"
+  end
+
+  create_table "student_health_lifestyles", force: :cascade do |t|
+    t.integer  "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_student_health_lifestyles_on_student_id"
+  end
+
+  create_table "student_my_descriptions", force: :cascade do |t|
+    t.integer  "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_student_my_descriptions_on_student_id"
+  end
+
+  create_table "student_passport_infos", force: :cascade do |t|
+    t.integer  "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_student_passport_infos_on_student_id"
+  end
+
+  create_table "student_program_preferences", force: :cascade do |t|
+    t.integer  "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_student_program_preferences_on_student_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.string   "type"
+    t.string   "firstname"
+    t.string   "lastname"
+    t.string   "email"
+    t.string   "country"
+    t.string   "city"
+    t.string   "address"
+    t.string   "tel"
+    t.string   "cell"
+    t.string   "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "volunteer_about_mes", force: :cascade do |t|
+    t.integer  "volunteer_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["volunteer_id"], name: "index_volunteer_about_mes_on_volunteer_id"
   end
 
 end
