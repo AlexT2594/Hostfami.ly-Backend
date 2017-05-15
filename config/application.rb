@@ -22,5 +22,14 @@ module GlacialWoodland68635
     end
 
     config.autoload_paths += %W(\#{config.root}/lib)
+
+    # For now enable all API from every host
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => :any
+      end
+    end
+
   end
 end

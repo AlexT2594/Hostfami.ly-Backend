@@ -21,6 +21,8 @@ gem 'bcrypt'
 
 gem 'city-state'
 
+gem 'rack-cors'
+
 #Api gems
 gem 'active_model_serializers'
 
