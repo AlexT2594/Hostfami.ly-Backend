@@ -12,6 +12,11 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+
+      # Sends email to user when user is created.
+      ExampleMailer.sample_email(@user).deliver
+
+
       render json: @user
     else
       render json: { errors: @user.errors.full_messages }
