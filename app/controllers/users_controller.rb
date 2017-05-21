@@ -14,8 +14,7 @@ class UsersController < ApplicationController
     if @user.save
 
       # Sends email to user when user is created.
-      ExampleMailer.sample_email(@user).deliver
-
+      UserCreatedMailer.send_confirmation_email(@user).deliver
 
       render json: @user
     else
