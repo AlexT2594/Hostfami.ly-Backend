@@ -76,8 +76,11 @@ ActiveRecord::Schema.define(version: 20170513133542) do
     t.string   "email"
     t.string   "gender"
     t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.boolean  "email_confirmed", default: false
+    t.string   "confirm_token"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.index ["confirm_token"], name: "index_users_on_confirm_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
