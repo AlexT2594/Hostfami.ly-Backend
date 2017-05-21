@@ -1,17 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.action_mailer.delivery_method = :smtp
-  # SMTP settings for mailgun
-  ActionMailer::Base.smtp_settings = {
-    :port           => 587,
-    :address        => "smtp.mailgun.org",
-    :domain         => ENV['domain'],
-    :user_name      => ENV['username'],
-    :password       => ENV['password'],
-    :authentication => :plain,
-  }}
-
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -71,7 +60,7 @@ Rails.application.configure do
 
   #TODO we should set the actual host of our application here
   #config.action_mailer.default_url_options = {host: 'localhost', port: 3001}
-  
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
