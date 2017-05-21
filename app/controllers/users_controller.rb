@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     if @user.save
 
       # Sends email to user when user is created.
-      UserCreatedMailer.send_confirmation_email(@user).deliver
+      #UserCreatedMailer.send_confirmation_email(@user).deliver
 
       render json: @user
     else
@@ -33,6 +33,6 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:firstname, :lastname, :email, :password, :password_confirmation)
+      params.require(:user).permit(:firstname, :lastname, :email, :email_confirmation,:password, :password_confirmation, :gender)
     end
 end
