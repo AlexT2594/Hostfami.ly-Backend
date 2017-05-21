@@ -14,8 +14,8 @@ class UsersController < ApplicationController
     if @user.save
 
       # Sends email to user when user is created.
-      ExampleMailer.sample_email(@user).deliver
-
+      UserAuthMailer.send_confirmation_email(@user).deliver_later
+      #deliver_later will still be slow since there is no backend for jobs as delayed job or sidekiq
 
       render json: @user
     else

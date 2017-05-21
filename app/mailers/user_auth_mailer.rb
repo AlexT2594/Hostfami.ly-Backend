@@ -1,6 +1,5 @@
-class ExampleMailer < ActionMailer::Base
-
-  def sample_email(user)
+class UserAuthMailer < ActionMailer::Base
+  def send_confirmation_email(user)
     @user = user
     mg_client = Mailgun::Client.new ENV['api_key']
     mb_obj = Mailgun::MessageBuilder.new
