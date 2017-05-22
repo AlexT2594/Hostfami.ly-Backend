@@ -1,7 +1,8 @@
 class CreateUsers < ActiveRecord::Migration[5.0]
   def change
     create_table :users do |t|
-      t.string :type
+      t.string :type #setted automatically by rails
+      t.string :utype #we set it for an user in general
       t.string :firstname
       t.string :lastname
       t.string :email

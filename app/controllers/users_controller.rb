@@ -9,8 +9,16 @@ class UsersController < ApplicationController
     end
   end
 
+
   def create
-    @user = User.new(user_params)
+    if(user_params[:utype] == "student")
+      @user = Student.new(user_params)
+    elsif(user_params[:utype] == "family")
+      @user = Family.new(user_params)
+    else
+      @user = Volunteer.new(user_params)
+    end
+
     if @user.save
 
       UserAuthMailer.send_confirmation_email(@user).deliver_later
@@ -43,7 +51,7 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:firstname, :lastname, :email, :email_confirmation,:password, :password_confirmation, :birthday, :state, :city, :address)
+      params.require(:user).permit(:utype, :firstname, :lastname, :email, :email_confirmation,:password, :password_confirmation, :birthday, :state, :city, :address)
     end
 
 end

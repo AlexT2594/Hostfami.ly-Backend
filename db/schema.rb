@@ -21,12 +21,12 @@ ActiveRecord::Schema.define(version: 20170513133542) do
 
   create_table "student_about_mes", force: :cascade do |t|
     t.integer  "student_id"
-    t.date     "birthday"
-    t.string   "birthday_country"
-    t.string   "country_living"
     t.string   "gender"
+    t.integer  "tell"
+    t.integer  "cell"
+    t.string   "religion"
+    t.string   "tutor_email"
     t.integer  "religion_celebrations"
-    t.boolean  "same_religion_hosting"
     t.integer  "height"
     t.integer  "weight"
     t.datetime "created_at",            null: false
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 20170513133542) do
 
   create_table "users", force: :cascade do |t|
     t.string   "type"
+    t.string   "utype"
     t.string   "firstname"
     t.string   "lastname"
     t.string   "email"
