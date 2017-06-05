@@ -10,7 +10,7 @@ rake-test:
   image: ruby:2.4.1
   script:
     - apt-get update -qy
-    - bundle install --path /cache
+    - bundle install --path /cache --without production
     - bundle exec rake db:environment:set RAILS_ENV=test
     - bundle exec rake db:migrate
     - bundle exec rake db:test:prepare
