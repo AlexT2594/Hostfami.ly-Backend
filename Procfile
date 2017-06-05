@@ -1,1 +1,2 @@
-web: bundle exec puma -t 5:5 -p ${PORT:-3000} -e ${RACK_ENV:-development}
+web: cd ../hf_fe_vue && npm start
+web: bundle exec puma -C config/puma.rb
