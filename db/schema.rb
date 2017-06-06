@@ -12,16 +12,8 @@
 
 ActiveRecord::Schema.define(version: 20170513133542) do
 
-  create_table "family_abouts", force: :cascade do |t|
-    t.integer  "family_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["family_id"], name: "index_family_abouts_on_family_id"
-  end
-
   create_table "student_about_mes", force: :cascade do |t|
     t.integer  "student_id"
-    t.string   "gender"
     t.integer  "tell"
     t.integer  "cell"
     t.string   "religion"
@@ -36,13 +28,24 @@ ActiveRecord::Schema.define(version: 20170513133542) do
 
   create_table "student_educational_backgrounds", force: :cascade do |t|
     t.integer  "student_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "school"
+    t.date     "from"
+    t.date     "to"
+    t.string   "description"
+    t.boolean  "graduate"
+    t.string   "mother_language"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.index ["student_id"], name: "index_student_educational_backgrounds_on_student_id"
   end
 
   create_table "student_health_lifestyles", force: :cascade do |t|
     t.integer  "student_id"
+    t.boolean  "allergies"
+    t.boolean  "handicaps"
+    t.boolean  "pets"
+    t.boolean  "diet"
+    t.boolean  "smoking"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["student_id"], name: "index_student_health_lifestyles_on_student_id"
@@ -50,15 +53,22 @@ ActiveRecord::Schema.define(version: 20170513133542) do
 
   create_table "student_my_descriptions", force: :cascade do |t|
     t.integer  "student_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["student_id"], name: "index_student_my_descriptions_on_student_id"
   end
 
   create_table "student_passport_infos", force: :cascade do |t|
     t.integer  "student_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "firstname"
+    t.string   "lastname"
+    t.string   "number"
+    t.date     "release"
+    t.date     "expiration"
+    t.string   "birth_country"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.index ["student_id"], name: "index_student_passport_infos_on_student_id"
   end
 
@@ -71,7 +81,6 @@ ActiveRecord::Schema.define(version: 20170513133542) do
 
   create_table "users", force: :cascade do |t|
     t.string   "type"
-    t.string   "utype"
     t.string   "firstname"
     t.string   "lastname"
     t.string   "email"

@@ -2,7 +2,6 @@ class CreateStudentAboutMes < ActiveRecord::Migration[5.0]
   def change
     create_table :student_about_mes do |t|
       t.belongs_to :student, index: true
-      t.string :gender
       t.integer :tell
       t.integer :cell
       t.string :religion
