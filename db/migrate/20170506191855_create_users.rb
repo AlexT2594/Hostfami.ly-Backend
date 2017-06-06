@@ -10,6 +10,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :city
       t.string :address
       t.string :password_digest
+      t.string :gender
       t.boolean :email_confirmed, default: false
       t.string :confirm_token
 

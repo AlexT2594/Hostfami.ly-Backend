@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20170513133542) do
     t.string   "city"
     t.string   "address"
     t.string   "password_digest"
+    t.string   "gender"
     t.boolean  "email_confirmed", default: false
     t.string   "confirm_token"
     t.datetime "created_at",                      null: false
