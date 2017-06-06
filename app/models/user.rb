@@ -32,4 +32,16 @@ class User < ApplicationRecord
     save!(:validate => false)
   end
 
+  def volunteer?
+    self.type == "Volunteer"
+  end
+
+  def family?
+    self.type == "Family"
+  end
+
+  def student?
+    self.type == "Student"
+  end
+
 end

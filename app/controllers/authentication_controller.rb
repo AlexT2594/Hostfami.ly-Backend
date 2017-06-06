@@ -12,7 +12,7 @@ class AuthenticationController < ApplicationController
         link: "http://localhost:3100/confirm_email?" + user.confirm_token
       }
     else
-      render json: {errors: ['Invalid Username/Password']}, status: :unauthorized
+      render json: {error: 'Invalid Username/Password'}
     end
   end
 end
