@@ -9,4 +9,7 @@ Rails.application.routes.draw do
 
   post "educational_background" => "educational_background#create"
   get "educational_background" => "educational_background#show"
+
+  post "health_lifestyle" => "health_lifestyle#create"
+  get "health_lifestyle" => "health_lifestyle#show"
 end
