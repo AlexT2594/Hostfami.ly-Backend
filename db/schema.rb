@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20170513133542) do
     t.date     "from"
     t.date     "to"
     t.string   "description"
-    t.boolean  "graduate"
+    t.boolean  "graduated"
     t.string   "mother_language"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false

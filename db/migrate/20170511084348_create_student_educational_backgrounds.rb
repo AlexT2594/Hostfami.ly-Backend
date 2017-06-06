@@ -6,7 +6,7 @@ class CreateStudentEducationalBackgrounds < ActiveRecord::Migration[5.0]
       t.date :from
       t.date :to
       t.string :description
-      t.boolean :graduate
+      t.boolean :graduated
       t.string :mother_language
 
       t.timestamps

@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   post "login" => "authentication#authenticate_user"
   get "home" => "home#index"
   get "confirm_email" => "users#confirm_email"
+
   post "about_me" => "about_me#create"
   get "about_me" => "about_me#show"
+
+  post "educational_background" => "educational_background#create"
+  get "educational_background" => "educational_background#show"
 end

@@ -1,4 +1,4 @@
 class Student::EducationalBackground < ApplicationRecord
-  self.table_name = "educational_backgrounds"
+  self.table_name = "student_educational_backgrounds"
   belongs_to :student
 end
