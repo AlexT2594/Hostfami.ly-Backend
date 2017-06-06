@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   get "home" => "home#index"
   get "confirm_email" => "users#confirm_email"
   post "about_me" => "about_me#create"
+  get "about_me" => "about_me#show"
 end
