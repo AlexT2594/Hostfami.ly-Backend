@@ -11,9 +11,10 @@ class UsersController < ApplicationController
 
 
   def create
-    if(user_params[:utype] == "student")
+    utype = get_utype
+    if(utype == "student")
       @user = Student.new(user_params)
-    elsif(user_params[:utype] == "family")
+    elsif(utype == "family")
       @user = Family.new(user_params)
     else
       @user = Volunteer.new(user_params)
@@ -50,8 +51,11 @@ class UsersController < ApplicationController
   end
 
   private
+    def get_utype
+      params.require(:user).permit(:utype)[:utype]
+    end
     def user_params
-      params.require(:user).permit(:utype, :firstname, :lastname, :email, :email_confirmation,:password, :password_confirmation, :birthday, :state, :city, :address)
+      params.require(:user).permit(:firstname, :lastname, :email, :email_confirmation,:password, :password_confirmation, :birthday, :state, :city, :address)
     end
 
 end

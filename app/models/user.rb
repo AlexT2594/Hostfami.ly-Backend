@@ -7,7 +7,6 @@ class User < ApplicationRecord
   validates :state, presence: true
   validates :city, presence: true
   validates :address, presence: true
-  validates :utype, presence: true
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_PASSWORD_REGEX = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/
