@@ -39,8 +39,9 @@ end
 group :test do
   gem "rspec-rails", "~> 3.5"
   gem "factory_girl_rails"
-  gem 'ffaker'
+  gem 'faker'
   gem "shoulda-matchers", git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+  gem 'database_cleaner' #so that after every test database is cleaned
 end
 
 group :development do
