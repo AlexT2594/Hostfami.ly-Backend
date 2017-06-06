@@ -15,4 +15,7 @@ Rails.application.routes.draw do
 
   post "passport_info" => "passport_info#create"
   get "passport_info" => "passport_info#show"
+
+  post "my_description" => "my_description#create"
+  get "my_description" => "my_description#show"
 end
