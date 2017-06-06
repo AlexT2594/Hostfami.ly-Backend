@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  protect_from_forgery with: :null_session
   protected
   def authenticate_request!
     unless user_id_in_token?
