@@ -8,6 +8,11 @@ Bundler.require(*Rails.groups)
 
 module GlacialWoodland68635
   class Application < Rails::Application
+
+    config.api_only = true
+    config.debug_exception_response_format = :api
+
+
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
       g.test_framework :rspec, fixture: true
