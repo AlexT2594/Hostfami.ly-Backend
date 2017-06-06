@@ -12,4 +12,7 @@ Rails.application.routes.draw do
 
   post "health_lifestyle" => "health_lifestyle#create"
   get "health_lifestyle" => "health_lifestyle#show"
+
+  post "passport_info" => "passport_info#create"
+  get "passport_info" => "passport_info#show"
 end
