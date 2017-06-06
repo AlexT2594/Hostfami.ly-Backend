@@ -18,6 +18,6 @@ class EducationalBackgroundController < ApplicationController
 
   private
     def student_params
-      params.permit(:school, :from, :to, :description, :graduated, :mother_language)
+      params.require(:user).permit(:school, :from, :to, :description, :graduated, :mother_language)
     end
 end

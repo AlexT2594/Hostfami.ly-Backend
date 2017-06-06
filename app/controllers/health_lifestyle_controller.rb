@@ -18,6 +18,6 @@ class HealthLifestyleController < ApplicationController
 
   private
     def student_params
-      params.permit(:school, :from, :to, :description, :graduated, :mother_language)
+      params.require(:user).permit(:allergies, :handicaps, :pets, :diet, :smoking)
     end
 end

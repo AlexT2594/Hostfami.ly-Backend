@@ -18,6 +18,6 @@ class AboutMeController < ApplicationController
 
   private
     def student_params
-      params.permit(:gender, :weight, :height, :tell, :cell, :religion, :tutor_email, :religion_celebrations)
+      params.require(:user).permit(:gender, :weight, :height, :tell, :cell, :religion, :tutor_email, :religion_celebrations)
     end
 end

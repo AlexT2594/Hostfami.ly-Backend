@@ -18,6 +18,6 @@ class PassportInfoController < ApplicationController
 
   private
     def student_params
-      params.permit(:firstname, :lastname, :number, :release, :expiration, :birth_country)
+      params.require(:user).permit(:firstname, :lastname, :number, :release, :expiration, :birth_country)
     end
 end
