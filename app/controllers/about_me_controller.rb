@@ -7,7 +7,7 @@ class AboutMeController < ApplicationController
     	@student.about_me = Student::AboutMe.new(student_params)
 
     	if @student.about_me.save
-    		render json: { error: "Successful" }
+    		render json: { result: "Successful" }
       else
         render json: { error: "User not found" }
       end
