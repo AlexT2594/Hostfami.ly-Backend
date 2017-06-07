@@ -18,4 +18,6 @@ Rails.application.routes.draw do
 
   post "my_description" => "my_description#create"
   get "my_description" => "my_description#show"
+
+  get "data" => "data#show"
 end
