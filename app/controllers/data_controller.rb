@@ -1,5 +1,5 @@
 class DataController < ApplicationController
-  before_filter :authenticate_request!
+  before_action :authenticate_request!
 
   def show
     if @current_user.student?
