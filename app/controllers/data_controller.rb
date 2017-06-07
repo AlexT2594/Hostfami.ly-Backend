@@ -6,6 +6,7 @@ class DataController < ApplicationController
       render json: {
         user: @current_user,
         data: {
+          about_me: @current_user.about_me,
           educational_background: @current_user.educational_background,
           health_lifestyle: @current_user.health_lifestyle,
           my_description: @current_user.my_description,
