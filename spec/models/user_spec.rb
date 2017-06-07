@@ -3,19 +3,19 @@ require 'spec_helper'
 RSpec.describe User, type: :model do
 
   it "has a valid factory" do
-    expect(FactoryGirl.create(:user)).to be_valid
+    expect(FactoryGirl.create(:student)).to be_valid
   end
 
   it "is invalid without a firstname" do
-    expect(FactoryGirl.build(:user,firstname: nil)).not_to be_valid
+    expect(FactoryGirl.build(:student,firstname: nil)).not_to be_valid
   end
 
   it "does not allow users with email different than email_confirmation" do
-    expect(FactoryGirl.build(:user,email: "a@a.it", email_confirmation: "a@b.it")).not_to be_valid
+    expect(FactoryGirl.build(:student,email: "a@a.it", email_confirmation: "a@b.it")).not_to be_valid
   end
 
   it "does not allow users with password different than password_confirmation" do
-    expect(FactoryGirl.build(:user,password: "Pass123", password_confirmation: "Pass23")).not_to be_valid
+    expect(FactoryGirl.build(:student,password: "Pass123", password_confirmation: "Pass23")).not_to be_valid
   end
 =begin
 
