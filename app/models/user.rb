@@ -26,6 +26,8 @@ class User < ApplicationRecord
 
   has_secure_token :confirm_token
 
+  has_many :posts
+
   def email_activate
     self.email_confirmed = true
     self.confirm_token = nil
