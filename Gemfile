@@ -28,6 +28,8 @@ gem 'rack-cors'
 #Api gems
 gem 'active_model_serializers'
 
+gem 'will_paginate'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
