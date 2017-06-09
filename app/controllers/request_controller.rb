@@ -15,16 +15,15 @@ class RequestController < ApplicationController
   def requests
   	if @current_user.volunteer? 
   		volunteer_city = params[:city]
-  		requests = Request.all
+  		requests = []
+  		Request.find_each do |request|
+  			requests << request
+  		end
 
-	    requests.each do |request|
-	    	if(request.student.city != volunteer_city) requests.delete(request)
-	    end
-
-	    if !requests
+	    if(r.size == 0)
 	      render json: { error: "Requests not found" }
 	    else
-	      render json: { result: requests }
+	      render json: { result: requests.to_json }
 	    end
   	
   	elsif @current_user.family?
