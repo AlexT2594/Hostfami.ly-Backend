@@ -13,6 +13,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :gender
       t.boolean :email_confirmed, default: false
       t.string :confirm_token
+      t.boolean :forms_filled, default: false
 
       t.timestamps
     end

@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170513133542) do
+ActiveRecord::Schema.define(version: 20170609194323) do
+
+  create_table "events", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "student_about_mes", force: :cascade do |t|
     t.integer  "student_id"
@@ -92,6 +102,7 @@ ActiveRecord::Schema.define(version: 20170513133542) do
     t.string   "gender"
     t.boolean  "email_confirmed", default: false
     t.string   "confirm_token"
+    t.boolean  "forms_filled",    default: false
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.index ["confirm_token"], name: "index_users_on_confirm_token", unique: true
