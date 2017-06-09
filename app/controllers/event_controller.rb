@@ -3,7 +3,9 @@ class EventController < ApplicationController
   def create
     event = Event.new(event_params)
     event.volunteer = @current_user
-    if event.save
+    if !current_user.volunteer?
+    	render json: {error: "Only volunteers can create events"}
+    elsif event.save
       render json: { result: "Successful" }
     else
       render json: { error: "Oh snap! We had a problem creating your event!!" }
