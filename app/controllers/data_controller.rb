@@ -11,8 +11,8 @@ class DataController < ApplicationController
           health_lifestyle: @current_user.health_lifestyle,
           my_description: @current_user.my_description,
           passport_info: @current_user.passport_info
-        }
-      }
+        } 
+      } , :except => [:created_at,:updated_at,:password_digest,:email_confirmed,:confirm_token]
     elsif @current_user.family?
       render json: {
         user: @current_user
