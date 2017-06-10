@@ -24,5 +24,9 @@ Rails.application.routes.draw do
   post "my_description" => "my_description#create"
   get "my_description" => "my_description#show"
 
+  post "request" => "request#create"
+  get "request" => "request#index"
+  put "request" => "request#update"
+
   get "data" => "data#show"
 end

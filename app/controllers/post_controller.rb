@@ -2,6 +2,7 @@ class PostController < ApplicationController
   before_action :authenticate_request!
   def create
     post = Post.new(post_params)
+    @current_user.posts << post
     post.user = @current_user
     if post.save
       render json: { result: "Successful" }
@@ -24,7 +25,8 @@ class PostController < ApplicationController
     render json: { posts: posts, remaining_pages: posts.total_pages }
   end
 
-  def post_params
-    params.require(:post).permit(:title, :content)
-  end
+  private
+    def post_params
+      params.require(:post).permit(:title, :content)
+    end
 end

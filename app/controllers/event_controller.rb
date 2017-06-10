@@ -2,6 +2,7 @@ class EventController < ApplicationController
 	  before_action :authenticate_request!
   def create
     event = Event.new(event_params)
+    @current_user.events << event
     event.volunteer = @current_user
     if !current_user.volunteer?
     	render json: {error: "Only volunteers can create events"}
@@ -26,7 +27,8 @@ class EventController < ApplicationController
     render json: { events: events}
   end
 
-  def post_params
-    params.permit(:title, :place, :description, :date)
-  end
+  private
+    def post_params
+      params.permit(:title, :place, :description, :date)
+    end
 end

@@ -1,7 +1,8 @@
 class RequestController < ApplicationController
   before_action :authenticate_request!
   def create
-    request = Request.new(request_params)
+    request = Request.new()
+    @current_user.request = request
     request.student = @current_user
     if !@current_user.student?
     	render json: {error: "Only a student can create a request"}
@@ -12,18 +13,20 @@ class RequestController < ApplicationController
     end
   end
 
-  def requests
+  def index
   	if @current_user.volunteer? 
-  		volunteer_city = params[:city]
+  		volunteer_city = @current_user.city
   		requests = []
-  		Request.find_each do |request|
-  			requests << request
+  		Request.all.each do |request|
+  			if request.student.city == volunteer_city
+          requests << request.to_json
+        end
   		end
 
-	    if(r.size == 0)
+	    if(requests.size == 0)
 	      render json: { error: "Requests not found" }
 	    else
-	      render json: { result: requests.to_json }
+	      render json: { result: requests}, :except => [:created_at,:updated_at]
 	    end
   	
   	elsif @current_user.family?
@@ -43,5 +46,22 @@ class RequestController < ApplicationController
   		end	
   	end
   end
+
+  def update
+    request = Request.exists?(params[:id])
+    if !request
+      render json: {error:"Request not found"}
+    else
+      request = Request.find(params[:id])
+      request.family_id = params[:family_id]
+      request.state = params[:state]
+      render json: {error:"Request updated successfully"}
+    end
+  end
+
+  private
+    def post_params
+      params.require(:post).permit(:id,:family_id, :state)
+    end
 end
 

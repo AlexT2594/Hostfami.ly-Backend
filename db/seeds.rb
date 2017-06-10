@@ -64,8 +64,31 @@ users = User.create([
 posts = Post.create([
   {
     user_id: 1,
-    title: "My greate experience",
+    title: "My great experience",
     content: "Blahfodsoifjeoiajfoijdsoifjeoi"
+  }
+])
+
+events = Event.create([
+  {
+    volunteer_id: 3,
+    title: "Event of the year",
+    place: "Where stars are born",
+    description: "Free buffet for all",
+    date: "12/12/2012"
+  }
+])
+
+requests = Request.create([
+  {
+    student_id: 1,
+    family_id: 4,
+    state: "Accepted"
+  },
+  {
+    student_id: 2,
+    family_id: nil,
+    state: "Pending"
   }
 ])
 
