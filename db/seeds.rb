@@ -61,6 +61,14 @@ users = User.create([
   }
 ])
 
+posts = Post.create([
+  {
+    user_id: 1,
+    title: "My greate experience",
+    content: "Blahfodsoifjeoiajfoijdsoifjeoi"
+  }
+])
+
 users.each do |user|
   user.email_activate
 end
