@@ -4,7 +4,6 @@ class DataController < ApplicationController
   def show
     if @current_user.student?
       render json: {
-        user: ActiveModelSerializers::SerializableResource.new(@current_user, adapter: :json, root: false).as_json[@current_user.type.downcase.to_sym],
         data: {
           about_me: @current_user.about_me,
           educational_background: @current_user.educational_background,
@@ -15,11 +14,15 @@ class DataController < ApplicationController
       } , :except => [:created_at,:updated_at,:password_digest,:email_confirmed,:confirm_token]
     elsif @current_user.family?
       render json: {
-        user: @current_user
+        data: {
+          # Please render family forms here as student
+        }
       }
     else
       render json: {
-        user: @current_user
+        data: {
+          # Please render volunteer forms here as student
+        }
       }
     end
   end
