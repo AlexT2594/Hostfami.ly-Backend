@@ -4,7 +4,7 @@ class DataController < ApplicationController
   def show
     if @current_user.student?
       render json: {
-        user: ActiveModelSerializers::SerializableResource.new(@current_user, adapter: :json).as_json,
+        user: ActiveModelSerializers::SerializableResource.new(@current_user, adapter: :json, root: false).as_json[@current_user.type.downcase.to_sym],
         data: {
           about_me: @current_user.about_me,
           educational_background: @current_user.educational_background,
