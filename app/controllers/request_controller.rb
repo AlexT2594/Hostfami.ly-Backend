@@ -42,7 +42,7 @@ class RequestController < ApplicationController
 				request_to_send["student"] = request.student
 				request_to_send["family"] = Family.find(request.family_id)
 				request_to_send["state"] = request.state
-  			render json: {result: request_to_send}
+  			render json: {result: request_to_send}, :except => [:created_at,:updated_at]
   		end
 
   	else
@@ -54,7 +54,7 @@ class RequestController < ApplicationController
 				request_to_send["student"] = request.student
 				request_to_send["family"] = Family.find(request.family_id)
 				request_to_send["state"] = request.state
-  			render json: {result: request_to_send}
+  			render json: {result: request_to_send}, :except => [:created_at,:updated_at]
   		end	
   	end
   end
@@ -75,9 +75,16 @@ class RequestController < ApplicationController
     end
   end
 
-  private
-    def post_params
-      params.require(:post).permit(:id,:family_id, :state)
-    end
+  def delete
+  	if !Request.exists?(params[:id])
+  		render json: {error:"Request not found"}
+  	else
+  		request = Request.find(params[:id])
+  		request.destroy
+  		render json: {result:"Request deleted"}
+  	end
+
+  end
+
 end
 
