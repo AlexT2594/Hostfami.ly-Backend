@@ -17,9 +17,13 @@ class RequestController < ApplicationController
   	if @current_user.volunteer? 
   		volunteer_city = @current_user.city
   		requests = []
-  		Request.all.each do |request|
+  		Request.find_each do |request|
   			if request.student.city == volunteer_city
-          requests << request.to_json
+  				request_to_send = {}
+  				request_to_send["student"] = request.student
+  				request_to_send["family"] = Family.exists?(request.family_id) ? Family.find(request.family_id) : ""
+  				request_to_send["state"] = request.state
+          requests << request_to_send
         end
   		end
 
@@ -34,7 +38,11 @@ class RequestController < ApplicationController
   		if !request
   			render json: {error: "Request not found"}
   		else
-  			render json: {result: request}
+			  request_to_send = {}
+				request_to_send["student"] = request.student
+				request_to_send["family"] = Family.find(request.family_id)
+				request_to_send["state"] = request.state
+  			render json: {result: request_to_send}
   		end
 
   	else
@@ -42,20 +50,28 @@ class RequestController < ApplicationController
   		if !request
   			render json: {error: "Request not found"}
   		else
-  			render json: {result: request}
+ 			  request_to_send = {}
+				request_to_send["student"] = request.student
+				request_to_send["family"] = Family.find(request.family_id)
+				request_to_send["state"] = request.state
+  			render json: {result: request_to_send}
   		end	
   	end
   end
 
   def update
     request = Request.exists?(params[:id])
-    if !request
-      render json: {error:"Request not found"}
+  	if !Request.exists?(params[:id]) || !Family.exists?(params[:family_id])
+  		render json: {error:"We couldn't find a matching request"}
     else
       request = Request.find(params[:id])
       request.family_id = params[:family_id]
       request.state = params[:state]
-      render json: {error:"Request updated successfully"}
+      if request.save
+      	render json: {result:"Request updated successfully"}
+      else
+      	render json: {error:"Could not update your request"}
+      end
     end
   end
 

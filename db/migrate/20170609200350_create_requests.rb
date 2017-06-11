@@ -3,7 +3,7 @@ class CreateRequests < ActiveRecord::Migration[5.0]
     create_table :requests do |t|
     	t.belongs_to :student, index: true
     	t.string :family_id
-    	t.string :state, default: "pending"
+    	t.string :state, default: "Pending"
 
       t.timestamps
     end
