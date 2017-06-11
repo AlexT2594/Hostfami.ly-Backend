@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :post
   end
 
-  resources :events, only: [:create,:show,:index]
+  resources :event, only: [:create,:show,:index]
 
   post "login" => "authentication#authenticate_user"
   get "home" => "home#index"
@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   get "my_description" => "my_description#show"
 
   post "request" => "request#create"
-  get "request" => "request#index"
+  get "request/:type" => "request#index"
   patch "request" => "request#update"
   delete "request/:id" => "request#delete"
 

@@ -18,17 +18,21 @@ class EventController < ApplicationController
     if !event
       render json: { error: "Event not found" }
     else
-      render json: { result: Event.find(params[:id]) }
+      event = Event.find(params[:id])
+      event_to_send = event.attributes
+      event_to_send["volunteer"] = event.volunteer
+      event_to_send.delete("volunteer_id")
+      render json: { result: event_to_send } , :except => [:created_at,:updated_at]
     end
   end
 
   def index
     events = Event.all
-    render json: { events: events}
+    render json: { events: events} , :except => [:created_at,:updated_at]
   end
 
   private
-    def post_params
-      params.permit(:title, :place, :description, :date)
+    def event_params
+      params.require(:event).permit(:title, :place, :description, :date)
     end
 end

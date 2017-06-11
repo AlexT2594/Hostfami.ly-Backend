@@ -17,21 +17,39 @@ class RequestController < ApplicationController
   	if @current_user.volunteer? 
   		volunteer_city = @current_user.city
   		requests = []
-  		Request.find_each do |request|
-  			if request.student.city == volunteer_city
-  				request_to_send = {}
-  				request_to_send["student"] = request.student
-  				request_to_send["family"] = Family.exists?(request.family_id) ? Family.find(request.family_id) : ""
-  				request_to_send["state"] = request.state
-          requests << request_to_send
-        end
-  		end
+  		if params.has_key?(:type) && params[:type] == "student"
 
-	    if(requests.size == 0)
-	      render json: { error: "Requests not found" }
-	    else
-	      render json: { result: requests}, :except => [:created_at,:updated_at]
-	    end
+	  		Request.find_each do |request|
+	  			  next if !Student.exists?(request.student_id) || Student.find(request.student_id).city != volunteer_city  || request.family_id != ""
+	  				request_to_send = {}
+	  				request_to_send["student"] = Student.find(request.student_id)
+	  				request_to_send["family"] = ""
+	  				request_to_send["state"] = request.state
+	          requests << request_to_send
+	  		end
+
+        if(requests.size == 0) 
+          render json: {error: "Requests not found"}
+        else
+          render json: { result: requests}, :except => [:created_at,:updated_at]
+        end
+
+
+  		elsif params.has_key?(:type) && params[:type] == "family"
+  			Request.find_each do |request|
+  				next if !Family.exists?(request.family_id) || Family.find(request.family_id).city != volunteer_city || request.student_id != ""
+	  			request_to_send = {}
+  				request_to_send["student"] = ""
+  				request_to_send["family"] = Family.find(request.family_id)
+  				request_to_send["state"] = request.state
+          requests << request_to_send 				
+  			end
+
+  			render json: { result: requests}, :except => [:created_at,:updated_at]
+
+  		else
+  			render json: {error:"Type not specified"}
+  		end
   	
   	elsif @current_user.family?
   		request = Request.find_by_family_id(@current_user.id)
