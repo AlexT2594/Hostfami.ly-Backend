@@ -100,7 +100,7 @@ requests = Request.create([
   },
   {
     student_id: 2,
-    family_id: nil,
+    family_id: "",
     state: "Pending"
   }
 ])
