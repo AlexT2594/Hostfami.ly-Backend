@@ -27,9 +27,10 @@ Rails.application.routes.draw do
 
   post "request" => "request#create"
   get "request" => "request#index"
-  get "request/:type" => "request#index"
   patch "request" => "request#update"
   delete "request/:id" => "request#delete"
+
+  get "request/:type/:status" => "request#index"
 
   get "data" => "data#show"
 end

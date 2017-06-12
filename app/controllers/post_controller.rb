@@ -23,7 +23,7 @@ class PostController < ApplicationController
 
   def index
     posts = Post.where(user_id: @current_user.id).page(params[:page]).order('created_at DESC')
-    render json: { posts: posts, remaining_pages: posts.total_pages }
+    render json: { posts: posts, total_pages: posts.total_pages }
   end
 
   private
