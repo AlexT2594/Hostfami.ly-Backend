@@ -58,7 +58,7 @@ class RequestController < ApplicationController
     if !r
       render json: { error: "Requests not found" }
     else
-      requests = r.where(status: params[:status]).page(params[:page]).order('created_at DESC')
+      requests = r.where(status: params[:status]).page(params[:page])
       render json: { requests: requests, total_pages: requests.total_pages }
     end
   end
@@ -89,6 +89,11 @@ class RequestController < ApplicationController
   		render json: {result:"Request deleted"}
   	end
 
+  end
+
+  def incoming_students
+    res = Request.where(status: "accepted", student_state: @current_user.state).page(params[:page])
+    render json: { requests: res, total_pages: res.total_pages }
   end
 
 end

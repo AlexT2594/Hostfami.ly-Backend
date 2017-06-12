@@ -10,4 +10,8 @@ class ProgramPreferenceController < ApplicationController
       render json: {result: "Success"}
     end
   end
+
+  def show
+    render json: { program_preference: @current_user.presence || "" }
+  end
 end

@@ -35,4 +35,8 @@ Rails.application.routes.draw do
   get "data" => "data#show"
 
   post "country" => "program_preference#create"
+  get "country" => "program_preference#show"
+
+  get "incoming_students" => "request#incoming_students"
+
 end
