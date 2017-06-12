@@ -63,14 +63,27 @@ users = User.create([
     type: "Volunteer",
     firstname: "Best",
     lastname: "Vol",
-    email: "a2@vol.it",
-    email_confirmation: "a2@vol.it",
+    email: "a2@vol.br",
+    email_confirmation: "a2@vol.br",
+    password: "Miao1.",
+    password_confirmation: "Miao1.",
+    birthday: "09/09/1995",
+    state: "Brazil",
+    city: "Sao Paulo",
+    address: "Via Roma, 8"
+  },
+  {
+    type: "Student",
+    firstname: "Antonio",
+    lastname: "Stud",
+    email: "b@stud.it",
+    email_confirmation: "b@stud.it",
     password: "Miao1.",
     password_confirmation: "Miao1.",
     birthday: "09/09/1995",
     state: "Italy",
-    city: "Sao Paulo",
-    address: "Via Roma, 8" 
+    city: "Rome",
+    address: "Via Roma, 8"
   }
 ])
 
