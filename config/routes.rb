@@ -33,4 +33,6 @@ Rails.application.routes.draw do
   get "request/:type/:status" => "request#index"
 
   get "data" => "data#show"
+
+  post "country" => "program_preference#create"
 end
