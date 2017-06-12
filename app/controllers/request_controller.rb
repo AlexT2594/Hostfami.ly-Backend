@@ -2,19 +2,18 @@ class RequestController < ApplicationController
   before_action :authenticate_request!
   def create
     request = Request.new()
-    @current_user.request = request
     request.student = @current_user
-    if !@current_user.student?
+    if @current_user.volunteer?
     	render json: {error: "Only a student can create a request"}
     elsif request.save
       render json: { result: "Successful" }
     else
-      render json: { error: "Oh nap! We had problems creating your request!!" }
+      render json: { error: request.errors.to_json }
     end
   end
 
   def index
-  	if @current_user.volunteer? 
+  	if @current_user.volunteer?
   		volunteer_city = @current_user.city
   		requests = []
   		if params.has_key?(:type) && params[:type] == "student"
@@ -28,7 +27,7 @@ class RequestController < ApplicationController
 	          requests << request_to_send
 	  		end
 
-        if(requests.size == 0) 
+        if(requests.size == 0)
           render json: {error: "Requests not found"}
         else
           render json: { result: requests}, :except => [:created_at,:updated_at]
@@ -42,7 +41,7 @@ class RequestController < ApplicationController
   				request_to_send["student"] = ""
   				request_to_send["family"] = Family.find(request.family_id)
   				request_to_send["state"] = request.state
-          requests << request_to_send 				
+          requests << request_to_send
   			end
 
   			render json: { result: requests}, :except => [:created_at,:updated_at]
@@ -50,7 +49,7 @@ class RequestController < ApplicationController
   		else
   			render json: {error:"Type not specified"}
   		end
-  	
+
   	elsif @current_user.family?
   		request = Request.find_by_family_id(@current_user.id)
   		if !request
@@ -73,7 +72,7 @@ class RequestController < ApplicationController
 				request_to_send["family"] = Family.exists?(request.family_id) ? Family.find(request.family_id) : ""
 				request_to_send["state"] = request.state
   			render json: {result: request_to_send}, :except => [:created_at,:updated_at]
-  		end	
+  		end
   	end
   end
 
@@ -105,4 +104,3 @@ class RequestController < ApplicationController
   end
 
 end
-

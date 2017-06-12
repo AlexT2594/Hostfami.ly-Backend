@@ -1,5 +1,7 @@
 class Request < ApplicationRecord
 	validate :student_and_family
+	belongs_to :student, optional: true
+	belongs_to :family, optional: true
 
 	def student_and_family
 		if student_id.blank? and family_id.blank?
