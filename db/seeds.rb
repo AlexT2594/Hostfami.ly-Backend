@@ -109,12 +109,11 @@ requests = Request.create([
   {
     student_id: 1,
     family_id: 4,
-    state: "Accepted"
+    status: "accepted"
   },
   {
     student_id: 2,
-    family_id: "",
-    state: "Pending"
+    status: "pending"
   }
 ])
 

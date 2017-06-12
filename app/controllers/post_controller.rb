@@ -2,7 +2,7 @@ class PostController < ApplicationController
   before_action :authenticate_request!
   def create
     pars = post_params
-    pars["author"] = @current_user.firstname + " " + @current_user.lastname
+    pars[:author] = @current_user.firstname + " " + @current_user.lastname
     post = Post.new(pars)
     post.user = @current_user
     if post.save
@@ -23,7 +23,7 @@ class PostController < ApplicationController
 
   def index
     posts = Post.where(user_id: @current_user.id).page(params[:page]).order('created_at DESC')
-    render json: { posts: posts, remaining_pages: posts.total_pages }
+    render json: { posts: posts, total_pages: posts.total_pages }
   end
 
   private
