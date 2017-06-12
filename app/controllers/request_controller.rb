@@ -57,7 +57,7 @@ class RequestController < ApplicationController
   			render json: {error: "Request not found"}
   		else
 			  request_to_send = {}
-				request_to_send["student"] = request.student
+				request_to_send["student"] = Student.exists?(request.student_id) ? Student.find(request.student_id) : ""
 				request_to_send["family"] = Family.find(request.family_id)
 				request_to_send["state"] = request.state
   			render json: {result: request_to_send}, :except => [:created_at,:updated_at]
@@ -69,8 +69,8 @@ class RequestController < ApplicationController
   			render json: {error: "Request not found"}
   		else
  			  request_to_send = {}
-				request_to_send["student"] = request.student
-				request_to_send["family"] = Family.find(request.family_id)
+				request_to_send["student"] = Student.find(request.student_id)
+				request_to_send["family"] = Family.exists?(request.family_id) ? Family.find(request.family_id) : ""
 				request_to_send["state"] = request.state
   			render json: {result: request_to_send}, :except => [:created_at,:updated_at]
   		end	

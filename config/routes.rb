@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get "my_description" => "my_description#show"
 
   post "request" => "request#create"
+  get "request" => "request#index"
   get "request/:type" => "request#index"
   patch "request" => "request#update"
   delete "request/:id" => "request#delete"
