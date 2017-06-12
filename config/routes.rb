@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   resources :users, only: [:show, :create, :update, :index] do
-    resources :post
   end
+
+  resources :post
 
   resources :event, only: [:create,:show,:index]
 

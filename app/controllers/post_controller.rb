@@ -1,8 +1,9 @@
 class PostController < ApplicationController
   before_action :authenticate_request!
   def create
-    post = Post.new(post_params)
-    @current_user.posts << post
+    pars = post_params
+    pars["author"] = @current_user.firstname + " " + @current_user.lastname
+    post = Post.new(pars)
     post.user = @current_user
     if post.save
       render json: { result: "Successful" }
@@ -16,7 +17,7 @@ class PostController < ApplicationController
     if !post
       render json: { error: "Post not found" }
     else
-      render json: { result: Post.find(params[:id]) }
+      render json: { result: Post.find(params[:id])}
     end
   end
 

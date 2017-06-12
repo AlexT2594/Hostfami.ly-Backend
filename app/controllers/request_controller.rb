@@ -19,7 +19,7 @@ class RequestController < ApplicationController
   		if params.has_key?(:type) && params[:type] == "student"
 
 	  		Request.find_each do |request|
-	  			  next if !Student.exists?(request.student_id) || Student.find(request.student_id).city != volunteer_city  || request.family_id != ""
+	  			  next if !Student.exists?(request.student_id) || Student.find(request.student_id).city != volunteer_city  || !request.family_id
 	  				request_to_send = {}
 	  				request_to_send["student"] = Student.find(request.student_id)
 	  				request_to_send["family"] = ""

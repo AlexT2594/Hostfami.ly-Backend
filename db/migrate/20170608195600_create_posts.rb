@@ -3,6 +3,7 @@ class CreatePosts < ActiveRecord::Migration[5.0]
     create_table :posts do |t|
       t.belongs_to :user, index: true
       t.string :title
+      t.string :author
       t.binary :content
 
       t.timestamps

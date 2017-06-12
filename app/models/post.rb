@@ -4,4 +4,5 @@ class Post < ApplicationRecord
   default_scope ->{ order('created_at') }
 
   validates :title, presence: true
+  validates :author, presence: true
 end
