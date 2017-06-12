@@ -29,6 +29,19 @@ class RequestController < ApplicationController
     end
   end
 
+  def show
+    if !@current_user.volunteer?
+      req = @current_user.request
+      if req
+        render json: { result: req }
+      else
+        render json: { error: "No request found"}
+      end
+    else
+      render json: { error: "Vols don't have requests"}
+    end
+  end
+
   def index
     r = nil
     if params[:type] == "student"
