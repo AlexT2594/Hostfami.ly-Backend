@@ -5,6 +5,8 @@ class CreateRequests < ActiveRecord::Migration[5.0]
     	t.string :family_id
     	t.string :state, default: "Pending"
 
+      t.belongs_to :student, index: true
+      t.belongs_to :family, index: true
       t.timestamps
     end
   end
