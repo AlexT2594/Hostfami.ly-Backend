@@ -18,13 +18,14 @@ class RequestController < ApplicationController
           student_city: @current_user.city,
           student_state: @current_user.state
         })
-        request.student = @current_user
+        @current_user.request = request
       end
     elsif @current_user.family?
       request = Request.new({
         family_lastname: @current_user.lastname,
         family_city: @current_user.city
       })
+      @current_user.request = request
     end
 
     if request.save
