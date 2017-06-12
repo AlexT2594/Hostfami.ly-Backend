@@ -25,7 +25,10 @@ Rails.application.routes.draw do
   post "my_description" => "my_description#create"
   get "my_description" => "my_description#show"
 
-  resources :request, only: [:create, :index, :update, :delete]
+  post "request" => "request#create"
+  get "request" => "request#index"
+  put "request" => "request#update"
+  delete "request/:id" => "request#delete"
 
   get "request/:type/:status" => "request#index"
 
