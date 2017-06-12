@@ -107,7 +107,6 @@ events = Event.create([
 
 requests = Request.create([
   {
-    student_id: 1,
     family_id: 4,
     status: "accepted"
   },

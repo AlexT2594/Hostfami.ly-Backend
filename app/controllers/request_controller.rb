@@ -1,4 +1,6 @@
 class RequestController < ApplicationController
+  before_action :authenticate_request!
+
   def create
 
     if @current_user.volunteer?
@@ -44,14 +46,11 @@ class RequestController < ApplicationController
   end
 
   def update
-    request = Request.exists?(params[:id])
-  	if !Request.exists?(params[:id]) || !Family.exists?(params[:family_id])
+  	if !Request.exists?(params[:id])
   		render json: {error:"We couldn't find a matching request"}
     else
       request = Request.find(params[:id])
-      request.family_id = params[:family_id]
-      request.state = params[:state]
-      if request.save
+      if request.update_attributes(req_params)
       	render json: {result:"Request updated successfully"}
       else
       	render json: {error:"Could not update your request"}
@@ -59,9 +58,8 @@ class RequestController < ApplicationController
     end
   end
 
-
-  def filter_request
-
+  def req_params
+    params.require(:request).permit(:family_id, :student_id, :status)
   end
 
   def delete
