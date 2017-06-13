@@ -6,8 +6,11 @@ Rails.application.routes.draw do
 
   resources :event, only: [:create,:show,:index,:update,:destroy]
 
-  resources :request, only: [:create,:show,:index,:update,:destroy]
+  post "request" => "request#create"
+  get "request" => "request#show"
   get "request/:type/:status" => "request#index"
+  put "request" => "request#update"
+  detele "request/:id" => "request#destroy"
 
   post "login" => "authentication#authenticate_user"
   get "home" => "home#index"
