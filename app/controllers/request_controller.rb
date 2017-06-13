@@ -77,10 +77,6 @@ class RequestController < ApplicationController
     end
   end
 
-  def req_params
-    params.require(:request).permit(:family_id, :student_id, :status)
-  end
-
   def destroy
   	if !Request.exists?(params[:id])
   		render json: {error:"Request not found"}
@@ -94,6 +90,11 @@ class RequestController < ApplicationController
   def incoming_students
     res = Request.where(status: "accepted", student_state: @current_user.state).page(params[:page])
     render json: { requests: res, total_pages: res.total_pages }
+  end
+
+  private
+  def req_params
+    params.require(:request).permit(:family_id, :student_id, :status)
   end
 
 end

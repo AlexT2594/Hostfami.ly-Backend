@@ -32,6 +32,19 @@ class EventController < ApplicationController
     render json: { events: events, total_pages: events.total_pages}
   end
 
+  def update
+    if !Event.exists?(params[:id])
+      render json: {error:"Event doesn't exist"}
+    else
+      event = Event.find(params[:id])
+      if event.update_attributes(event_params)
+        render json: {result:"Event updated successfully"}
+      else
+        render json: {error:"Could not update your event"}
+      end
+    end
+  end
+
   def destroy
     if !Event.exists?(params[:id])
       render json: {error:"Event not found"}
@@ -44,6 +57,6 @@ class EventController < ApplicationController
 
   private
     def event_params
-      params.require(:event).permit(:title, :place, :description, :date)
+      params.require(:event).permit(:organiser,:title, :place, :description, :date)
     end
 end

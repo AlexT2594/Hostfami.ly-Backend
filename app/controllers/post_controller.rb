@@ -31,7 +31,7 @@ class PostController < ApplicationController
       render json: {error:"We couldn't find your post"}
     else
       post = Post.find(params[:id])
-      if post.update_attributes(req_params)
+      if post.update_attributes(post_params)
         render json: {result:"Post updated successfully"}
       else
         render json: {error:"Could not update your Post"}
