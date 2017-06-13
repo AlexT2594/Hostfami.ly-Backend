@@ -101,5 +101,4 @@ class RequestController < ApplicationController
   def req_params
     params.require(:request).permit(:family_id, :student_id, :status)
   end
-
 end

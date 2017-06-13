@@ -1,3 +1,5 @@
 api_key: 'key-e86342cd5e29c9f1a0363159eef2adda'
 domain: 'sandbox64872019509648f69a7ab887d939bab9.mailgun.org'
 mail_at: '@sandbox64872019509648f69a7ab887d939bab9.mailgun.org'
+twilio_sid: 'AC219b35dcda4364cc45e34338f16bae9b'
+twilio_token: '3c47070fb859d3839361f9059e05b5f2'

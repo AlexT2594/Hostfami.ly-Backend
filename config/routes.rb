@@ -35,4 +35,6 @@ Rails.application.routes.draw do
 
   get "incoming_students" => "request#incoming_students"
 
+  post "sms_notification/:cell/:status" => "sms_notification#send_sms"
+
 end
