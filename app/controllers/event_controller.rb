@@ -4,7 +4,6 @@ class EventController < ApplicationController
     pars = event_params
     pars[:organiser] = @current_user.firstname + " " + @current_user.lastname
     event = Event.new(pars)
-    @current_user.events << event
     event.volunteer = @current_user
     if !@current_user.volunteer?
     	render json: {error: "Only volunteers can create events"}
