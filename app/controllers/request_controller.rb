@@ -70,6 +70,11 @@ class RequestController < ApplicationController
     else
       request = Request.find(params[:id])
       if request.update_attributes(req_params)
+        if @current_user.volunteer? and request.student.email_notification and params[:status] == "accepted"
+          RequestNotificationMailer.send_accepted_notification(request.student).deliver_later
+        elsif @current_user.volunteer? and request.student.email_notification and params[:status] == "rejected"
+          RequestNotificationMailer.send_rejected_notification(request.student).deliver_later
+        end
       	render json: {result:"Request updated successfully"}
       else
       	render json: {error:"Could not update your request"}

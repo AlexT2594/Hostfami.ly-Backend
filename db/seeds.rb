@@ -31,7 +31,8 @@ users = User.create([
     birthday: "09/09/1995",
     state: "Brazil",
     city: "Sao Paulo",
-    address: "Rua dos meninos"
+    address: "Rua dos meninos",
+    email_notification: true
   },
   {
     type: "Volunteer",
