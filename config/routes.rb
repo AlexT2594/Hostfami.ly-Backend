@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get "request" => "request#show"
   get "request/:type/:status" => "request#index"
   put "request" => "request#update"
-  detele "request/:id" => "request#destroy"
+  delete "request/:id" => "request#destroy"
 
   post "login" => "authentication#authenticate_user"
   get "home" => "home#index"
