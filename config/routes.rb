@@ -4,7 +4,10 @@ Rails.application.routes.draw do
 
   resources :post
 
-  resources :event, only: [:create,:show,:index,:destroy]
+  resources :event, only: [:create,:show,:index,:update,:destroy]
+
+  resources :request, only: [:create,:show,:index,:update,:destroy]
+  get "request/:type/:status" => "request#index"
 
   post "login" => "authentication#authenticate_user"
   get "home" => "home#index"
@@ -24,13 +27,6 @@ Rails.application.routes.draw do
 
   post "my_description" => "my_description#create"
   get "my_description" => "my_description#show"
-
-  post "request" => "request#create"
-  put "request" => "request#update"
-  delete "request/:id" => "request#delete"
-  get "request" => "request#show"
-
-  get "request/:type/:status" => "request#index"
 
   get "data" => "data#show"
 

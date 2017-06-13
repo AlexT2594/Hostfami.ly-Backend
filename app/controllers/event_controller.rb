@@ -22,14 +22,14 @@ class EventController < ApplicationController
     else
       event = Event.find(params[:id])
       event_to_send = event.attributes
-      event_to_send["volunteer"] = event.volunteer #do we need to show all information of an event
+      event_to_send["volunteer"] = event.volunteer #do we need to show all information of an event?
       render json: { result: event_to_send } #canceled created_at so we can show when the event was created
     end
   end
 
   def index
     events = Event.all.page(params[:page])
-    render json: { events: events, total_pages: events.total_pages} , :except => [:created_at,:updated_at]
+    render json: { events: events, total_pages: events.total_pages}
   end
 
   def destroy

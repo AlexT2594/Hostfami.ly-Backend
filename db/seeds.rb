@@ -99,6 +99,7 @@ posts = Post.create([
 events = Event.create([
   {
     volunteer_id: 3,
+    organiser: "Best Vol",
     title: "Event of the year",
     place: "Where stars are born",
     description: "Free buffet for all",

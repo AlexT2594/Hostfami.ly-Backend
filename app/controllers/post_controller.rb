@@ -26,6 +26,29 @@ class PostController < ApplicationController
     render json: { posts: posts, total_pages: posts.total_pages }
   end
 
+  def update
+    if !Post.exists?(params[:id])
+      render json: {error:"We couldn't find your post"}
+    else
+      post = Post.find(params[:id])
+      if post.update_attributes(req_params)
+        render json: {result:"Post updated successfully"}
+      else
+        render json: {error:"Could not update your Post"}
+      end
+    end
+  end
+
+  def destroy
+    if !Post.exists?(params[:id])
+      render json: {error:"Post not found"}
+    else
+      post = Post.find(params[:id])
+      post.destroy
+      render json: {result:"Post deleted"}
+    end
+  end
+
   private
     def post_params
       params.require(:post).permit(:title, :content)

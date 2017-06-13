@@ -81,7 +81,7 @@ class RequestController < ApplicationController
     params.require(:request).permit(:family_id, :student_id, :status)
   end
 
-  def delete
+  def destroy
   	if !Request.exists?(params[:id])
   		render json: {error:"Request not found"}
   	else
@@ -89,7 +89,6 @@ class RequestController < ApplicationController
   		request.destroy
   		render json: {result:"Request deleted"}
   	end
-
   end
 
   def incoming_students
