@@ -1,10 +1,12 @@
 class EventController < ApplicationController
 	  before_action :authenticate_request!
   def create
-    event = Event.new(event_params)
+    pars = event_params
+    pars[:organiser] = @current_user.firstname + " " + @current_user.lastname
+    event = Event.new(pars)
     @current_user.events << event
     event.volunteer = @current_user
-    if !current_user.volunteer?
+    if !@current_user.volunteer?
     	render json: {error: "Only volunteers can create events"}
     elsif event.save
       render json: { result: "Successful" }
@@ -20,15 +22,24 @@ class EventController < ApplicationController
     else
       event = Event.find(params[:id])
       event_to_send = event.attributes
-      event_to_send["volunteer"] = event.volunteer
-      event_to_send.delete("volunteer_id")
-      render json: { result: event_to_send } , :except => [:created_at,:updated_at]
+      event_to_send["volunteer"] = event.volunteer #do we need to show all information of an event
+      render json: { result: event_to_send } #canceled created_at so we can show when the event was created
     end
   end
 
   def index
-    events = Event.all
-    render json: { events: events} , :except => [:created_at,:updated_at]
+    events = Event.all.page(params[:page])
+    render json: { events: events, total_pages: events.total_pages} , :except => [:created_at,:updated_at]
+  end
+
+  def destroy
+    if !Event.exists?(params[:id])
+      render json: {error:"Event not found"}
+    else
+      event = Event.find(params[:id])
+      event.destroy
+      render json: {result:"Event deleted"}
+    end
   end
 
   private

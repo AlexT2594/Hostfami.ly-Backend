@@ -90,6 +90,7 @@ users = User.create([
 posts = Post.create([
   {
     user_id: 1,
+    author: "Antonio Stud",
     title: "My great experience",
     content: "Blahfodsoifjeoiajfoijdsoifjeoi"
   }

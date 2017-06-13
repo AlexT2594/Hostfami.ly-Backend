@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :post
 
-  resources :event, only: [:create,:show,:index]
+  resources :event, only: [:create,:show,:index,:destroy]
 
   post "login" => "authentication#authenticate_user"
   get "home" => "home#index"
