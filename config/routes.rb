@@ -19,9 +19,11 @@ Rails.application.routes.draw do
 
   post "about_me" => "about_me#create"
   get "about_me" => "about_me#show"
+  get "about_me/:student_id" => "about_me#of_student"
 
   post "educational_background" => "educational_background#create"
   get "educational_background" => "educational_background#show"
+  get "educational_background/:student_id" => "educational_background#of_student"
 
   post "health_lifestyle" => "health_lifestyle#create"
   get "health_lifestyle" => "health_lifestyle#show"
