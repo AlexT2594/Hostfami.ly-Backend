@@ -16,7 +16,7 @@ class RequestController < ApplicationController
         request = Request.new({
           student_fullname: @current_user.firstname + " " + @current_user.lastname,
           student_city: @current_user.city,
-          student_state: @current_user.state
+          student_state: @current_user.program_preference.country
         })
         @current_user.request = request
       end
@@ -51,9 +51,9 @@ class RequestController < ApplicationController
   def index
     r = nil
     if params[:type] == "student"
-      r = Request.where(family: nil)
+      r = Request.where(family: nil, student_city: @current_user.city)
     elsif params[:type] == "family"
-      r = Request.where(student: nil)
+      r = Request.where(student: nil, family_city: @current_user.city)
     end
 
     if !r
@@ -64,11 +64,31 @@ class RequestController < ApplicationController
     end
   end
 
+  def associate_request
+    req = Request.new(
+      status: "associated",
+      family_lastname: params[:family_lastname],
+      student_fullname: params[:student_fullname],
+      student_state: params[:student_state],
+      student_city: params[:student_city],
+      family_city: params[:family_city]
+    )
+    stud = Student.find_by(id: params[:student_id])
+    fam = Family.find_by(id: params[:family_id])
+    if stud && fam
+      stud.request = req
+      fam.request = req
+      render json: { result: "Success" }
+    else
+      render json: { result: "Couldn't find either family or student" }
+    end
+  end
+
   def update
-  	if !Request.exists?(params[:id])
+    request = Request.find_by(id: params[:id])
+  	if !request
   		render json: {error:"We couldn't find a matching request"}
     else
-      request = Request.find(params[:id])
       if request.update_attributes(req_params)
         if @current_user.volunteer? and request.student.email_notification and params[:status] == "accepted"
           RequestNotificationMailer.send_accepted_notification(request.student).deliver_later
