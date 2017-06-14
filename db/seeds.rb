@@ -19,7 +19,8 @@ users = User.create([
     state: "Italy",
     city: "Rome",
     address: "Via Roma, 8",
-    email_notification: true
+    email_notification: true,
+    sms_notification: true
   },
   {
     type: "Student",
