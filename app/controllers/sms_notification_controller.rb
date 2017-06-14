@@ -1,7 +1,7 @@
 class SmsNotificationController < ApplicationController
   def send_sms
-    account_sid = 'AC219b35dcda4364cc45e34338f16bae9b'
-    auth_token = '3c47070fb859d3839361f9059e05b5f2'
+    account_sid = ENV['twilio_sid']
+    auth_token = ENV['twilio_token']
     @client = Twilio::REST::Client.new account_sid, auth_token
 
     message = @client.account.messages.create(
