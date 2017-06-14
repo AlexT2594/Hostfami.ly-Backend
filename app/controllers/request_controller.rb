@@ -90,10 +90,12 @@ class RequestController < ApplicationController
   		render json: {error:"We couldn't find a matching request"}
     else
       if request.update_attributes(req_params)
-        if @current_user.volunteer? and request.student.email_notification and params[:request][:status] == "accepted"
-          RequestNotificationMailer.send_accepted_notification(request.student).deliver_later
-        elsif @current_user.volunteer? and request.student.email_notification and params[:request][:status] == "rejected"
-          RequestNotificationMailer.send_rejected_notification(request.student).deliver_later
+        if @current_user.volunteer? and params[:request][:status] == "accepted"
+          RequestNotificationMailer.send_accepted_notification(request.student).deliver_later if request.student.email_notification
+          #SmsNotification.send_sms('+393202237655','accepted') if request.student.sms_notification
+        elsif @current_user.volunteer? and params[:request][:status] == "rejected"
+          RequestNotificationMailer.send_rejected_notification(request.student).deliver_later if request.student.email_notification
+          #SmsNotification.send_sms('+393202237655','rejected') if request.student.sms_notification
         end
       	render json: {result:"Request updated successfully"}
       else
