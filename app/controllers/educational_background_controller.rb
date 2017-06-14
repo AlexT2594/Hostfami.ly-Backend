@@ -20,7 +20,16 @@ class EducationalBackgroundController < ApplicationController
     if @current_user.student?
       render json: { educational_background: @current_user.educational_background }
     else
-      render json: { error: "Only students have ed back" }
+      render json: { error: "only students have ed background" }
+    end
+  end
+
+  def of_student
+    u = Student.find_by(params[:student_id])
+    if @current_user.volunteer? && u
+      render json: { educational_background: u.educational_background}
+    else
+      render json: { error: "Unauthorized"}
     end
   end
 
