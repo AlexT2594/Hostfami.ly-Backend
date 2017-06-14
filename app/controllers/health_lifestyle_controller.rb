@@ -16,6 +16,23 @@ class HealthLifestyleController < ApplicationController
     end
   end
 
+  def show
+    if @current_user.student?
+      render json: { about_me: @current_user.health_lifestyle }
+    else
+      render json: { error: "only students have health_lifestyle" }
+    end
+  end
+
+  def of_student
+    u = Student.find_by(params[:student_id])
+    if @current_user.volunteer? && u
+      render json: { about_me: u.health_lifestyle}
+    else
+      render json: { error: "Unauthorized"}
+    end
+  end
+
   private
     def student_params
       params.require(:user).permit(:allergies, :handicaps, :pets, :diet, :smoking)

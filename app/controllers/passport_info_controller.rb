@@ -16,6 +16,23 @@ class PassportInfoController < ApplicationController
     end
   end
 
+  def show
+    if @current_user.student?
+      render json: { about_me: @current_user.passport_info }
+    else
+      render json: { error: "only students have passport info" }
+    end
+  end
+
+  def of_student
+    u = Student.find_by(params[:student_id])
+    if @current_user.volunteer? && u
+      render json: { passport_info: u.passport_info}
+    else
+      render json: { error: "Unauthorized"}
+    end
+  end
+
   private
     def student_params
       params.require(:user).permit(:firstname, :lastname, :number, :release, :expiration, :birth_country)

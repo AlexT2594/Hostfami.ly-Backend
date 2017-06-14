@@ -27,12 +27,15 @@ Rails.application.routes.draw do
 
   post "health_lifestyle" => "health_lifestyle#create"
   get "health_lifestyle" => "health_lifestyle#show"
+  get "health_lifestyle/:student_id" => "health_lifestyle#of_student"
 
   post "passport_info" => "passport_info#create"
   get "passport_info" => "passport_info#show"
+  get "passport_info/:student_id" => "passport_info#of_student"
 
   post "my_description" => "my_description#create"
   get "my_description" => "my_description#show"
+  get "my_description/:student_id" => "my_description#of_student"
 
   get "data" => "data#show"
 
