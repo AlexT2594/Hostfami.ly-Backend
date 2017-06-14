@@ -27,7 +27,7 @@ class HealthLifestyleController < ApplicationController
   def of_student
     u = Student.find_by(params[:student_id])
     if @current_user.volunteer? && u
-      render json: { about_me: u.health_lifestyle}
+      render json: { health_lifestyle: u.health_lifestyle}
     else
       render json: { error: "Unauthorized"}
     end
