@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get "request/:type/:status" => "request#index"
   put "request/:id" => "request#update"
   delete "request/:id" => "request#destroy"
+  post "associate_request" => "request#associate_request"
 
   post "login" => "authentication#authenticate_user"
   get "home" => "home#index"

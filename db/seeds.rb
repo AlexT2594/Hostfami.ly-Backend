@@ -9,7 +9,7 @@
 users = User.create([
   {
     type: "Student",
-    firstname: "Antonio",
+    firstname: "Antonio Ita",
     lastname: "Stud",
     email: "a@stud.it",
     email_confirmation: "a@stud.it",
@@ -71,7 +71,7 @@ users = User.create([
     password_confirmation: "Miao1.",
     birthday: "09/09/1995",
     state: "Brazil",
-    city: "Sao Paulo",
+    city: "Rio de Janeiro",
     address: "Via Roma, 8"
   },
   {
@@ -88,6 +88,8 @@ users = User.create([
     address: "Via Roma, 8"
   }
 ])
+
+users[0].program_preference = Student::ProgramPreference.new(country: "Brazil")
 
 posts = Post.create([
   {
@@ -111,12 +113,17 @@ events = Event.create([
 
 requests = Request.create([
   {
-    family_id: 4,
-    status: "accepted"
+    student_id: 1,
+    status: "pending",
+    student_fullname: "Antonio Ita Stud",
+    student_state: "Brazil",
+    student_city: "Rome"
   },
   {
-    student_id: 2,
-    status: "pending"
+    family_id: 4,
+    status: "pending",
+    family_lastname: "Cenci",
+    family_city: "Rio de Janeiro"
   }
 ])
 
