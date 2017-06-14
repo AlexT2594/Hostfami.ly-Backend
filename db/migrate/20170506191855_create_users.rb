@@ -15,6 +15,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :confirm_token
       t.boolean :forms_filled, default: false
       t.boolean :email_notification, default: false
+      t.boolean :sms_notification, default:false
 
       t.timestamps
     end
