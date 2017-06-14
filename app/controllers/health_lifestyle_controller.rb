@@ -18,7 +18,7 @@ class HealthLifestyleController < ApplicationController
 
   def show
     if @current_user.student?
-      render json: { about_me: @current_user.health_lifestyle }
+      render json: { health_lifestyle: @current_user.health_lifestyle }
     else
       render json: { error: "only students have health_lifestyle" }
     end
