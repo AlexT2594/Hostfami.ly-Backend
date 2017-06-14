@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   post "request" => "request#create"
   get "request" => "request#show"
   get "request/:type/:status" => "request#index"
-  put "request" => "request#update"
+  put "request/:id" => "request#update"
   delete "request/:id" => "request#destroy"
 
   post "login" => "authentication#authenticate_user"
