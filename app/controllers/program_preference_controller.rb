@@ -12,6 +12,6 @@ class ProgramPreferenceController < ApplicationController
   end
 
   def show
-    render json: { program_preference: @current_user.presence || "" }
+    render json: { program_preference: @current_user.program_preference || "" }
   end
 end
