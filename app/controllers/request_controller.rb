@@ -65,41 +65,22 @@ class RequestController < ApplicationController
   end
 
   def handle_request
-    if params[:status] == "associated"
-
-      req = Request.new(
-        status: "associated",
-        family_lastname: params[:family_lastname],
-        student_fullname: params[:student_fullname],
-        student_state: params[:student_state],
-        student_city: params[:student_city],
-        family_city: params[:family_city]
-      )
-      stud = Student.find_by(id: params[:student_id])
-      fam = Family.find_by(id: params[:family_id])
-      if stud && fam
-        stud.request = req
-        fam.request = req
-        render json: { result: "Success" }
-      else
-        render json: { result: "Couldn't find either family or student" }
-      end
-
-    elsif params[:status] == "pending"
-
-      req = Request.new(
-        status: "pending"
-      )
-      stud = Student.find(params[:student_id])
-      if stud
-        stud.request = req
-        render json: {result:"Success"}
-      else
-        render json: {result: "Couldn't find student"}
-      end
-
+    req = Request.new(
+      status: "associated",
+      family_lastname: params[:family_lastname],
+      student_fullname: params[:student_fullname],
+      student_state: params[:student_state],
+      student_city: params[:student_city],
+      family_city: params[:family_city]
+    )
+    stud = Student.find_by(id: params[:student_id])
+    fam = Family.find_by(id: params[:family_id])
+    if stud && fam
+      stud.request = req
+      fam.request = req
+      render json: { result: "Success" }
     else
-      render json: {error:"Error recognizing status"}
+      render json: { result: "Couldn't find either family or student" }
     end
   end
 
@@ -110,11 +91,17 @@ class RequestController < ApplicationController
   		render json: {error:"We couldn't find a matching request"}
     else
       if request.update_attributes(req_params)
+        receiver = nil
+        if request.student
+          receiver = request.student
+        else
+          receiver = request.family
+        end
         if @current_user.volunteer? and params[:request][:status] == "accepted"
-          RequestNotificationMailer.send_accepted_notification(request.student).deliver_later if request.student.email_notification
+          RequestNotificationMailer.send_accepted_notification(receiver).deliver_later if receiver.email_notification
           #SmsNotification.send_sms('+393202237655','accepted') if request.student.sms_notification
         elsif @current_user.volunteer? and params[:request][:status] == "rejected"
-          RequestNotificationMailer.send_rejected_notification(request.student).deliver_later if request.student.email_notification
+          RequestNotificationMailer.send_rejected_notification(receiver).deliver_later if receiver.email_notification
           #SmsNotification.send_sms('+393202237655','rejected') if request.student.sms_notification
         end
       	render json: {result:"Request updated successfully"}
