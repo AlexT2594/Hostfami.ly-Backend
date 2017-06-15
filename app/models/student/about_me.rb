@@ -2,10 +2,10 @@ class Student::AboutMe < ApplicationRecord
   self.table_name = "student_about_mes"
   belongs_to :student
 
-  VALID_CELL_REGEX = /^(\+\d{1,3}[- ]?)?\d{10}$/
-  VALID_TEL_REGEX = /^\d{4,}$/
-  VALID_WEIGHT_REGEX = /^\d+(\.\d{1,2})?$/
-  VALID_HEIGHT_REGEX = /^\d{2,3}$/
+  VALID_CELL_REGEX = /\A(\+\d{1,3}[- ]?)?\d{10}\z/
+  VALID_TEL_REGEX = /\A\d{4,}\z/
+  VALID_WEIGHT_REGEX = /\A\d+(\.\d{1,2})?\z/
+  VALID_HEIGHT_REGEX = /\A\d{2,3}\z/
 
   validates :tell, length: {minimum: 4, maximum:15},
   				   format: {with: VALID_TEL_REGEX}

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_request!, :only => :show
+  before_action :authenticate_request!, :only => :show
   def show
     user = User.find_by(id: params[:id])
     if user.id == @current_user.id || @current_user.volunteer?
