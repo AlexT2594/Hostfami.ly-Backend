@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   before_filter :authenticate_request!, :only => :show
   def show
-    if User.exists?(params[:id])
-      @user = User.find(params[:id])
+    if @current_user.volunteer?
+      @user = User.find_by(id: params[:id])
       render json: @user, root: 'user'
     else
       render json: { errors: "User not found" }
