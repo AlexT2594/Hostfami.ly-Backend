@@ -64,25 +64,45 @@ class RequestController < ApplicationController
     end
   end
 
-  def associate_request
-    req = Request.new(
-      status: "associated",
-      family_lastname: params[:family_lastname],
-      student_fullname: params[:student_fullname],
-      student_state: params[:student_state],
-      student_city: params[:student_city],
-      family_city: params[:family_city]
-    )
-    stud = Student.find_by(id: params[:student_id])
-    fam = Family.find_by(id: params[:family_id])
-    if stud && fam
-      stud.request = req
-      fam.request = req
-      render json: { result: "Success" }
+  def handle_request
+    if params[:status] == "associated"
+
+      req = Request.new(
+        status: "associated",
+        family_lastname: params[:family_lastname],
+        student_fullname: params[:student_fullname],
+        student_state: params[:student_state],
+        student_city: params[:student_city],
+        family_city: params[:family_city]
+      )
+      stud = Student.find_by(id: params[:student_id])
+      fam = Family.find_by(id: params[:family_id])
+      if stud && fam
+        stud.request = req
+        fam.request = req
+        render json: { result: "Success" }
+      else
+        render json: { result: "Couldn't find either family or student" }
+      end
+
+    elsif params[:status] == "pending"
+
+      req = Request.new(
+        status: "pending"
+      )
+      stud = Student.find(params[:student_id])
+      if stud
+        stud.request = req
+        render json: {result:"Success"}
+      else
+        render json: {result: "Couldn't find student"}
+      end
+
     else
-      render json: { result: "Couldn't find either family or student" }
+      render json: {error:"Error recognizing status"}
     end
   end
+
 
   def update
     request = Request.find_by(id: params[:id])
