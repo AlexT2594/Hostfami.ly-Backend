@@ -8,7 +8,7 @@ class AboutMeController < ApplicationController
     	if @student.about_me.save
     		render json: { result: "Successful" }
       else
-        render json: { error: "User not found" }
+        render json: { errors: @student.about_me.errors.full_messages }
       end
     else
       render json: { error: "Unknown user" }
