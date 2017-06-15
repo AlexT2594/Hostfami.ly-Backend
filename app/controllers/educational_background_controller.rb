@@ -9,7 +9,7 @@ class EducationalBackgroundController < ApplicationController
       if @student.educational_background.save
         render json: { result: "Successful" }
       else
-        render json: { error: "User not found" }
+        render json: { errors: @student.educational_background.erros.full_messages }
       end
     else
       render json: { error: "Unknown user" }
