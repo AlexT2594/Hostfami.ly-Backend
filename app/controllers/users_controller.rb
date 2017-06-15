@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  #before_filter :authenticate_request!, :only => :show
+  before_filter :authenticate_request!, :only => :show
   def show
     if User.exists?(params[:id])
       @user = User.find(params[:id])
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(:utype)[:utype]
     end
     def user_params
-      params.require(:user).permit(:firstname, :lastname, :email, :email_confirmation,:password, :password_confirmation, :birthday, :state, :city, :address)
+      params.require(:user).permit(:firstname, :lastname, :email, :email_confirmation,:password, :password_confirmation, :birthday, :state, :city, :address, :sms_notification, :email_confirmation)
     end
 
 end

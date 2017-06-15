@@ -87,6 +87,19 @@ users = User.create([
     state: "Italy",
     city: "Rome",
     address: "Via Roma, 8"
+  },
+  {
+    type: "Family",
+    firstname: "Smith",
+    lastname: "Fam",
+    email: "a@fam.en",
+    email_confirmation: "a@fam.en",
+    password: "Miao1.",
+    password_confirmation: "Miao1.",
+    birthday: "09/09/1995",
+    state: "England",
+    city: "London",
+    address: "St. Saint German"
   }
 ])
 
