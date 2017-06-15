@@ -21,10 +21,12 @@ class UsersController < ApplicationController
     end
 
     if @user.save
-
-      UserAuthMailer.send_confirmation_email(@user).deliver_later
-      #deliver_later will still be slow since there is no backend for jobs as delayed job or sidekiq
-
+      if @user.volunteer?
+        UserAuthMailer.send_wait_email(@user).deliver_later
+      else
+        UserAuthMailer.send_confirmation_email(@user).deliver_later
+        #deliver_later will still be slow since there is no backend for jobs as delayed job or sidekiq
+      end
       render json: @user
     else
       render json: { errors: @user.errors.full_messages }
