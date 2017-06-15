@@ -9,7 +9,7 @@ class PassportInfoController < ApplicationController
       if @student.passport_info.save
         render json: { result: "Successful" }
       else
-        render json: { error: "User not found" }
+        render json: { errors: @student.passport_info.errors.full_messages }
       end
     else
       render json: { error: "Unknown user" }
