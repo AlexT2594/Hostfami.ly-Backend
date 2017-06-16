@@ -107,10 +107,10 @@ class RequestController < ApplicationController
         end
         if params[:request][:status] == "accepted"
           RequestNotificationMailer.send_accepted_notification(receiver).deliver_later if receiver.email_notification
-          #SmsNotification.send_sms('+393202237655','accepted') if receiver.sms_notification
-        elsif params[:request][:status] == "rejected"
+          SmsNotification.send_sms('+393202237655','accepted') if receiver.sms_notification
+        elsif @current_user.volunteer? and params[:request][:status] == "rejected"
           RequestNotificationMailer.send_rejected_notification(receiver).deliver_later if receiver.email_notification
-          #SmsNotification.send_sms('+393202237655','rejected') if receiver.sms_notification
+          SmsNotification.send_sms('+393202237655','rejected') if receiver.sms_notification
         end
       	render json: {result:"Request updated successfully"}
       else

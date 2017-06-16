@@ -7,7 +7,7 @@ FactoryGirl.define do
       f.lastname { Faker::Name.last_name }
       f.email "a@a.it"
       f.email_confirmation "a@a.it"
-      f.birthday Faker::Date.birthday(18, 20)
+      f.birthday {Faker::Date.birthday(15,24)}
       f.gender "M"
       f.state { Faker::Address.state }
       f.city { Faker::Address.city }
