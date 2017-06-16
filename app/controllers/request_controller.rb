@@ -86,6 +86,7 @@ class RequestController < ApplicationController
     if stud && fam
       stud.request = req
       fam.request = req
+      UserAuthMailer.send_association_email(fam, stud).deliver_now
       render json: { result: "Success" }
     else
       render json: { errors: ["Couldn't find either family or student"] }

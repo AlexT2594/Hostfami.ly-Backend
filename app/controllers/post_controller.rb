@@ -45,7 +45,8 @@ class PostController < ApplicationController
   end
 
   def destroy
-    if !Post.exists?(params[:id])
+    post = Post.find_by(params[:id])
+    if !post
       render json: {errors:["Post not found"]}
     elsif post.user_id == @current_user.id
       post = Post.find(params[:id])
