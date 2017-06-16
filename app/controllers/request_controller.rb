@@ -49,9 +49,17 @@ class RequestController < ApplicationController
   def index
     r = nil
     if params[:type] == "student"
-      r = Request.where(family: nil, student_city: @current_user.city)
+      if params[:status] == "associated"
+        r = Request.where(student_city: @current_user.city)
+      else
+        r = Request.where(family: nil, student_city: @current_user.city)
+      end
     elsif params[:type] == "family"
-      r = Request.where(student: nil, family_city: @current_user.city)
+      if params[:status] == "associated"
+        r = Request.where(family_city: @current_user.city)
+      else
+        r = Request.where(student: nil, family_city: @current_user.city)
+      end
     end
 
     if !r
@@ -99,10 +107,10 @@ class RequestController < ApplicationController
         end
         if params[:request][:status] == "accepted"
           RequestNotificationMailer.send_accepted_notification(receiver).deliver_later if receiver.email_notification
-          SmsNotification.send_sms('+393202237655','accepted') if receiver.sms_notification
+          #SmsNotification.send_sms('+393202237655','accepted') if receiver.sms_notification
         elsif params[:request][:status] == "rejected"
           RequestNotificationMailer.send_rejected_notification(receiver).deliver_later if receiver.email_notification
-          SmsNotification.send_sms('+393202237655','rejected') if receiver.sms_notification
+          #SmsNotification.send_sms('+393202237655','rejected') if receiver.sms_notification
         end
       	render json: {result:"Request updated successfully"}
       else
