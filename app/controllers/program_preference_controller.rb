@@ -4,7 +4,6 @@ class ProgramPreferenceController < ApplicationController
   def create
     if theres_hosting_family
       @current_user.program_preference = Student::ProgramPreference.new(country: params[:country])
-      @current_user.request.update_attributes(student_state: params[:country])
       render json: {result: "Success"}
     else
       render json: {errors: ["Looks like there's no remaining hostfamily for that country"]}
