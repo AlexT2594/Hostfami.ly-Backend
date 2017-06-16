@@ -7,7 +7,7 @@ FactoryGirl.define do
       f.lastname { Faker::Name.last_name }
       f.email "a@a.it"
       f.email_confirmation "a@a.it"
-      f.birthday "05/06/1995"
+      f.birthday Faker::Date.birthday(18, 20)
       f.gender "M"
       f.state { Faker::Address.state }
       f.city { Faker::Address.city }
@@ -15,8 +15,8 @@ FactoryGirl.define do
       f.password "Miao123"
       f.password_confirmation "Miao123"
       f.email_confirmed true
-      f.confirm_token { Faker::Crypto.md5 } 
-    end 
+      f.confirm_token { Faker::Crypto.md5 }
+    end
   end
 
   factory :invalid_user, parent: :user do |f|

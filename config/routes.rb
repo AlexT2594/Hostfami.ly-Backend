@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   end
 
   resources :post
+  get "my_posts" => "post#my_posts"
 
   resources :event, only: [:create,:show,:index,:update,:destroy]
 
