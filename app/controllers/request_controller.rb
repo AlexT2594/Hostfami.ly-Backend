@@ -4,7 +4,7 @@ class RequestController < ApplicationController
   def create
 
     if @current_user.volunteer?
-    	render json: {error: "Only a student can create a request"}
+    	render json: {errors: ["Only a student can create a request"]}
     else
       request = Request.new
       if @current_user.student?
@@ -42,7 +42,7 @@ class RequestController < ApplicationController
         render json: { errors: ["No request found"]}
       end
     else
-      render json: { errors: "Vols don't have requests"}
+      render json: { errors: ["Vols don't have requests"]}
     end
   end
 
@@ -55,7 +55,7 @@ class RequestController < ApplicationController
     end
 
     if !r
-      render json: { error: "Requests not found" }
+      render json: { errors: ["Requests not found"] }
     else
       requests = r.where(status: params[:status]).page(params[:page])
       render json: { requests: requests, total_pages: requests.total_pages }
@@ -78,7 +78,7 @@ class RequestController < ApplicationController
       fam.request = req
       render json: { result: "Success" }
     else
-      render json: { result: "Couldn't find either family or student" }
+      render json: { errors: ["Couldn't find either family or student"] }
     end
   end
 
@@ -86,7 +86,7 @@ class RequestController < ApplicationController
   def update
     request = Request.find_by(id: params[:id])
   	if !request
-  		render json: {error:"We couldn't find a matching request"}
+  		render json: {errors:["We couldn't find a matching request"]}
     else
       if request.update_attributes(req_params)
         receiver = nil
@@ -97,21 +97,21 @@ class RequestController < ApplicationController
         end
         if @current_user.volunteer? and params[:request][:status] == "accepted"
           RequestNotificationMailer.send_accepted_notification(receiver).deliver_later if receiver.email_notification
-          #SmsNotification.send_sms('+393202237655','accepted') if request.student.sms_notification
+          SmsNotification.send_sms('+393202237655','accepted') if request.student.sms_notification
         elsif @current_user.volunteer? and params[:request][:status] == "rejected"
           RequestNotificationMailer.send_rejected_notification(receiver).deliver_later if receiver.email_notification
-          #SmsNotification.send_sms('+393202237655','rejected') if request.student.sms_notification
+          SmsNotification.send_sms('+393202237655','rejected') if request.student.sms_notification
         end
       	render json: {result:"Request updated successfully"}
       else
-      	render json: {error:"Could not update your request"}
+      	render json: {errors:["Could not update your requests"]}
       end
     end
   end
 
   def destroy
   	if !Request.exists?(params[:id])
-  		render json: {error:"Request not found"}
+  		render json: {errors:["Request not found"]}
   	else
   		request = Request.find(params[:id])
   		request.destroy

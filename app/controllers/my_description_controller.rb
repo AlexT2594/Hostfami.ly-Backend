@@ -9,7 +9,7 @@ class MyDescriptionController < ApplicationController
         @current_user.my_description = md
         render json: { result: "Successful" }
       else
-        render json: { error: md.errors.full_messages }
+        render json: { errors: md.errors.full_messages }
       end
     else
       render json: { errors: ["Unknown user"] }

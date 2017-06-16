@@ -10,14 +10,14 @@ class EventController < ApplicationController
     elsif event.save
       render json: { result: "Successful" }
     else
-      render json: { error: "Oh snap! We had a problem creating your event!!" }
+      render json: { errors: ["Oh snap! We had a problem creating your event!!"] }
     end
   end
 
   def show
     event = Event.exists?(params[:id])
     if !event
-      render json: { error: "Event not found" }
+      render json: { errors: ["Event not found"] }
     else
       event = Event.find(params[:id])
       event_to_send = event.attributes
@@ -33,20 +33,20 @@ class EventController < ApplicationController
 
   def update
     if !Event.exists?(params[:id])
-      render json: {error:"Event doesn't exist"}
+      render json: {errors:["Event doesn't exist"]}
     else
       event = Event.find(params[:id])
       if event.update_attributes(event_params)
         render json: {result:"Event updated successfully"}
       else
-        render json: {error:"Could not update your event"}
+        render json: {errors:["Could not update your event"]}
       end
     end
   end
 
   def destroy
     if !Event.exists?(params[:id])
-      render json: {error:"Event not found"}
+      render json: {errors:["Event not found"]}
     else
       event = Event.find(params[:id])
       event.destroy

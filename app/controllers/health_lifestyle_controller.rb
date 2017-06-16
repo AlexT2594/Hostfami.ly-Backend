@@ -28,7 +28,7 @@ class HealthLifestyleController < ApplicationController
     if @current_user.student?
       render json: { health_lifestyle: @current_user.health_lifestyle }
     else
-      render json: { error: ["only students have health_lifestyle"] }
+      render json: { errors: ["only students have health_lifestyle"] }
     end
   end
 

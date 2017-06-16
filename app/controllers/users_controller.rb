@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     if user.id == @current_user.id || @current_user.volunteer?
       render json: user, root: 'user'
     else
-      render json: { errors: "User not found" }
+      render json: { errors: ["User not found"] }
     end
   end
 
@@ -46,9 +46,9 @@ class UsersController < ApplicationController
     user = User.find_by_confirm_token(params[:tk])
     if user
       user.email_activate
-      render json: { result: "success" }
+      render json: { result: "Success" }
     else
-      render json: { result: "error" }
+      render json: { errors: ["Error activating email"] }
     end
   end
 

@@ -15,7 +15,7 @@ class PostController < ApplicationController
   def show
     post = Post.exists?(params[:id])
     if !post
-      render json: { error: "Post not found" }
+      render json: { errors: ["Post not found"] }
     else
       render json: { result: Post.find(params[:id])}
     end
@@ -29,19 +29,19 @@ class PostController < ApplicationController
   def update
     post = Post.find_by(params[:id])
     if !post
-      render json: {error:"We couldn't find your post"}
+      render json: {errors:["We couldn't find your post"]}
     elsif post.user_id == @current_user.id
       if post.update_attributes(post_params)
         render json: {result:"Post updated successfully"}
       else
-        render json: {error:"Could not update your Post"}
+        render json: {errors:["Could not update your Post"]}
       end
     end
   end
 
   def destroy
     if !Post.exists?(params[:id])
-      render json: {error:"Post not found"}
+      render json: {errors:["Post not found"]}
     else
       post = Post.find(params[:id])
       post.destroy
