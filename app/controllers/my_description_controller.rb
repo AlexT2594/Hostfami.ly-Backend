@@ -3,16 +3,16 @@ class MyDescriptionController < ApplicationController
 
   def create
     if @current_user.student?
-      @student = @current_user
-      @student.my_description = Student::MyDescription.new(student_params)
-
-      if @student.my_description.save
+      md = Student::MyDescription.new(student_params)
+      md.student_id = @current_user.id
+      if md.valid?
+        @current_user.my_description = md
         render json: { result: "Successful" }
       else
-        render json: { error: "User not found" }
+        render json: { error: md.errors.full_messages }
       end
     else
-      render json: { error: "Unknown user" }
+      render json: { errors: ["Unknown user"] }
     end
   end
 
@@ -20,7 +20,7 @@ class MyDescriptionController < ApplicationController
     if @current_user.student?
       render json: { my_description: @current_user.my_description }
     else
-      render json: { error: "only students have my description" }
+      render json: { errors: ["only students have my description"] }
     end
   end
 
@@ -29,7 +29,7 @@ class MyDescriptionController < ApplicationController
     if @current_user.volunteer? && u
       render json: { my_description: u.my_description}
     else
-      render json: { error: "Unauthorized"}
+      render json: { errors: ["Unauthorized"]}
     end
   end
 

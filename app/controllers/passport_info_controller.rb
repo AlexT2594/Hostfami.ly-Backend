@@ -3,24 +3,24 @@ class PassportInfoController < ApplicationController
 
   def create
     if @current_user.student?
-      @student = @current_user
-      @student.passport_info = Student::PassportInfo.new(student_params)
-
-      if @student.passport_info.save
+      pi = Student::PassportInfo.new(student_params)
+      pi.student_id = @current_user.id
+      if pi.valid?
+        @current_user.passport_info = pi
         render json: { result: "Successful" }
       else
-        render json: { errors: @student.passport_info.errors.full_messages }
+        render json: { errors: pi.errors.full_messages }
       end
     else
-      render json: { error: "Unknown user" }
+      render json: { errors: ["Unknown user"] }
     end
   end
 
   def show
     if @current_user.student?
-      render json: { about_me: @current_user.passport_info }
+      render json: { passport_info: @current_user.passport_info }
     else
-      render json: { error: "only students have passport info" }
+      render json: { errors: ["only students have passport info"] }
     end
   end
 
@@ -29,7 +29,7 @@ class PassportInfoController < ApplicationController
     if @current_user.volunteer? && u
       render json: { passport_info: u.passport_info}
     else
-      render json: { error: "Unauthorized"}
+      render json: { errors: ["Unauthorized"]}
     end
   end
 

@@ -9,7 +9,7 @@ class EducationalBackgroundController < ApplicationController
         @current_user.educational_background = eb
         render json: { result: "Successful" }
       else
-        render json: { errors: @student.educational_background.errors.full_messages }
+        render json: { errors: eb.errors.full_messages }
       end
     else
       render json: { errors: ["Unknown user"] }

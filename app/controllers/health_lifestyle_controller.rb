@@ -3,11 +3,22 @@ class HealthLifestyleController < ApplicationController
 
   def create
     if @current_user.student?
-      @current_user.health_lifestyle = Student::HealthLifestyle.new(user_params)
-      render json: { result: "Successful" }
+      hl = Student::HealthLifestyle.new(user_params)
+      hl.student_id = @current_user.id
+      if hl.valid?
+        @current_user.health_lifestyle = hl
+        render json: { result: "Successful" }
+      else
+        render json: {errors: hl.errors.full_messages}
+      end
     elsif @current_user.family?
-      @current_user.health_lifestyle = Family::HealthLifestyle.new(user_params)
-      render json: { result: "Successful" }
+      hl = Family::HealthLifestyle.new(user_params)
+      hl.family_id = @current_user.id
+      if hl.valid?
+        render json: { result: "Successful" }
+      else
+        render json: {errors: hl.errors.full_messages}
+      end
     else
       render json: { errors: ["User not found"] }
     end
@@ -17,7 +28,7 @@ class HealthLifestyleController < ApplicationController
     if @current_user.student?
       render json: { health_lifestyle: @current_user.health_lifestyle }
     else
-      render json: { error: "only students have health_lifestyle" }
+      render json: { error: ["only students have health_lifestyle"] }
     end
   end
 
@@ -26,7 +37,7 @@ class HealthLifestyleController < ApplicationController
     if @current_user.volunteer? && u
       render json: { health_lifestyle: u.health_lifestyle}
     else
-      render json: { error: "Unauthorized"}
+      render json: { errors: ["Unauthorized"]}
     end
   end
 
