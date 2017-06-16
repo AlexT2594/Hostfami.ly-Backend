@@ -26,6 +26,11 @@ class PostController < ApplicationController
     render json: { posts: posts, total_pages: posts.total_pages }
   end
 
+  def my_posts
+    posts = Post.where(user_id: @current_user.id).page(params[:page])
+    render json: { posts: posts, total_pages: posts.total_pages }
+  end
+
   def update
     post = Post.find_by(params[:id])
     if !post
@@ -34,7 +39,7 @@ class PostController < ApplicationController
       if post.update_attributes(post_params)
         render json: {result:"Post updated successfully"}
       else
-        render json: {errors:["Could not update your Post"]}
+        render json: {errors:post.errors.full_messages}
       end
     end
   end
@@ -42,7 +47,7 @@ class PostController < ApplicationController
   def destroy
     if !Post.exists?(params[:id])
       render json: {errors:["Post not found"]}
-    else
+    elsif post.user_id == @current_user.id
       post = Post.find(params[:id])
       post.destroy
       render json: {result:"Post deleted"}

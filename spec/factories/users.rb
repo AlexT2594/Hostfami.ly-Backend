@@ -15,8 +15,8 @@ FactoryGirl.define do
       f.password "Miao123"
       f.password_confirmation "Miao123"
       f.email_confirmed true
-      f.confirm_token { Faker::Crypto.md5 } 
-    end 
+      f.confirm_token { Faker::Crypto.md5 }
+    end
   end
 
   factory :invalid_user, parent: :user do |f|
