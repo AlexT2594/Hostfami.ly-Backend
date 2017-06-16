@@ -9,6 +9,13 @@ class Student < User
 
   include EmptyDetect
 
+  after_create do |stud|
+    stud.request = Request.new({
+      student_fullname: stud.firstname + " " + stud.lastname,
+      student_city: stud.city
+    })
+  end
+
   def uncompleted_sections
     res = []
     if missing_attrs(about_me)
@@ -29,7 +36,7 @@ class Student < User
     if missing_attrs(program_preference)
       res << "program_preference"
     end
-    
+
     res
   end
 end

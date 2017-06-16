@@ -3,16 +3,16 @@ class EducationalBackgroundController < ApplicationController
 
   def create
     if @current_user.student?
-      @student = @current_user
-      @student.educational_background = Student::EducationalBackground.new(student_params)
-
-      if @student.educational_background.save
+      eb = Student::EducationalBackground.new(student_params)
+      eb.student_id = @current_user.id
+      if eb.valid?
+        @current_user.educational_background = eb
         render json: { result: "Successful" }
       else
-        render json: { errors: @student.educational_background.erros.full_messages }
+        render json: { errors: @student.educational_background.errors.full_messages }
       end
     else
-      render json: { error: "Unknown user" }
+      render json: { errors: ["Unknown user"] }
     end
   end
 
@@ -20,7 +20,7 @@ class EducationalBackgroundController < ApplicationController
     if @current_user.student?
       render json: { educational_background: @current_user.educational_background }
     else
-      render json: { error: "only students have ed background" }
+      render json: { errors: ["only students have ed background"] }
     end
   end
 
@@ -29,7 +29,7 @@ class EducationalBackgroundController < ApplicationController
     if @current_user.volunteer? && u
       render json: { educational_background: u.educational_background}
     else
-      render json: { error: "Unauthorized"}
+      render json: { errors: ["Unauthorized"]}
     end
   end
 

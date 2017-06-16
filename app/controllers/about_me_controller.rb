@@ -2,16 +2,17 @@ class AboutMeController < ApplicationController
   before_action :authenticate_request!
   def create
     if @current_user.student?
-    	@student = @current_user
-    	@student.about_me = Student::AboutMe.new(student_params)
+    	abm = Student::AboutMe.new(student_params)
+      abm.student_id = @current_user.id
 
-    	if @student.about_me.save
+    	if abm.valid?
+        @current_user.about_me = abm
     		render json: { result: "Successful" }
       else
-        render json: { errors: @student.about_me.errors.full_messages }
+        render json: { errors: abm.errors.full_messages }
       end
     else
-      render json: { error: "Unknown user" }
+      render json: { errors: ["Unknown user"] }
     end
   end
 
@@ -19,7 +20,7 @@ class AboutMeController < ApplicationController
     if @current_user.student?
       render json: { about_me: @current_user.about_me }
     else
-      render json: { error: "only students have about me" }
+      render json: { errors: ["only students have about me"] }
     end
   end
 
@@ -28,7 +29,7 @@ class AboutMeController < ApplicationController
     if @current_user.volunteer? && u
       render json: { about_me: u.about_me}
     else
-      render json: { error: "Unauthorized"}
+      render json: { errors: ["Unauthorized"]}
     end
   end
 

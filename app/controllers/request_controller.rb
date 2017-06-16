@@ -5,33 +5,31 @@ class RequestController < ApplicationController
 
     if @current_user.volunteer?
     	render json: {error: "Only a student can create a request"}
-    end
-
-    request = Request.new
-    if @current_user.student?
-      uncomp = @current_user.uncompleted_sections
-      if uncomp.length != 0
-        render json: { error: "You have uncompleted forms", details: uncomp}
-      else
+    else
+      request = Request.new
+      if @current_user.student?
+        uncomp = @current_user.uncompleted_sections
+        if uncomp.length != 0
+          render json: { errors: ["You have uncompleted forms"], details: uncomp}
+        else
+          request = Request.new({
+            student_fullname: @current_user.firstname + " " + @current_user.lastname,
+            student_city: @current_user.city,
+            student_state: @current_user.program_preference.country
+          })
+          @current_user.request = request
+          render json: { result: "Successful" }
+        end
+      elsif @current_user.family?
         request = Request.new({
-          student_fullname: @current_user.firstname + " " + @current_user.lastname,
-          student_city: @current_user.city,
-          student_state: @current_user.program_preference.country
+          family_lastname: @current_user.lastname,
+          family_city: @current_user.city
         })
         @current_user.request = request
+        render json: { result: "Successful" }
+      else
+        render json: { errors: request.errors.full_messages }
       end
-    elsif @current_user.family?
-      request = Request.new({
-        family_lastname: @current_user.lastname,
-        family_city: @current_user.city
-      })
-      @current_user.request = request
-    end
-
-    if request.save
-      render json: { result: "Successful" }
-    else
-      render json: { error: request.errors.full_messages }
     end
   end
 

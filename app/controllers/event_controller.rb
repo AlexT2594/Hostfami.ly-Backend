@@ -6,7 +6,7 @@ class EventController < ApplicationController
     event = Event.new(pars)
     event.volunteer = @current_user
     if !@current_user.volunteer?
-    	render json: {error: "Only volunteers can create events"}
+    	render json: {errors: ["Only volunteers can create events"]}
     elsif event.save
       render json: { result: "Successful" }
     else

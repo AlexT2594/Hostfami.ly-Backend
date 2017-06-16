@@ -8,8 +8,7 @@ class AuthenticationController < ApplicationController
           }
     elsif user and !user.email_confirmed and user.authenticate(params[:password])
       render json: {
-        error: "The email wasn't confirmed",
-        link: "http://localhost:3100/confirm_email?" + user.confirm_token
+        error: "The email wasn't confirmed"
       }
     else
       render json: {error: 'Invalid Username/Password'}

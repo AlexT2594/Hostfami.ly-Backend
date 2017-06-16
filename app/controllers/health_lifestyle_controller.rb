@@ -2,21 +2,14 @@ class HealthLifestyleController < ApplicationController
   before_action :authenticate_request!
 
   def create
-    @user = nil
     if @current_user.student?
-      @user = @current_user
-      @user.health_lifestyle = Student::HealthLifestyle.new(user_params)
+      @current_user.health_lifestyle = Student::HealthLifestyle.new(user_params)
+      render json: { result: "Successful" }
     elsif @current_user.family?
-      @user = @current_user
-      @user.health_lifestyle = Family::HealthLifestyle.new(user_params)
-    end
-
-    if !@user
-      render json: {error:"Unknown user"}
-    elsif @user.health_lifestyle.save
+      @current_user.health_lifestyle = Family::HealthLifestyle.new(user_params)
       render json: { result: "Successful" }
     else
-      render json: { error: "User not found" }
+      render json: { errors: ["User not found"] }
     end
   end
 

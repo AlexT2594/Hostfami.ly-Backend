@@ -8,11 +8,11 @@ class Student::AboutMe < ApplicationRecord
   VALID_HEIGHT_REGEX = /\A\d{2,3}\z/
 
   validates :tell, length: { maximum:15},
-  				   format: {with: VALID_TEL_REGEX}
+  				   format: {with: VALID_TEL_REGEX}, :allow_blank => true
   validates :cell, length: {maximum: 15},
-  				   format: {with: VALID_CELL_REGEX}
-  validates :religion, length: {maximum: 50}
-  validates :religion_celebrations, :inclusion => 1..3
-  validates :height, format: {with: VALID_HEIGHT_REGEX}
-  validates :weight, format: {with: VALID_WEIGHT_REGEX}
+  				   format: {with: VALID_CELL_REGEX}, :allow_blank => true
+  validates :religion, length: {maximum: 50}, :allow_blank => true
+  validates :religion_celebrations, :inclusion => 1..3, :allow_blank => true
+  validates :height, format: {with: VALID_HEIGHT_REGEX}, :allow_blank => true
+  validates :weight, format: {with: VALID_WEIGHT_REGEX}, :allow_blank => true
 end
