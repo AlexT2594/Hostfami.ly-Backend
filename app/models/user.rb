@@ -51,10 +51,10 @@ class User < ApplicationRecord
   end
 
   def old_enough
-  	if self.birthday and (self.birthday + 18.years) > Date.today and (volunteer? or family?)
+  	if self.birthday and (self.birthday.to_date + 18.years) > Date.today and (volunteer? or family?)
   		errors[:base] << "Volunteers or family representative must be at least 18"
   	end
-  	if self.birthday and student? and (self.birthday + 25.years < Date.today)
+  	if self.birthday and student? and (self.birthday.to_date + 25.years < Date.today)
   		errors[:base] << "Student can't be older than 25"
   	end
   end

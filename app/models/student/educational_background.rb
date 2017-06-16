@@ -7,7 +7,7 @@ class Student::EducationalBackground < ApplicationRecord
   validates :mother_language, length: {minimum:2,maximum:50}, :allow_blank => true
 
   def invalid_to
-  	if self.to and self.from and self.to < self.from
+  	if self.to and self.from and self.to.to_date < self.from.to_date
   		errors[:base] << "To can't be smaller than from"
   	end
   end

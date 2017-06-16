@@ -9,7 +9,7 @@ class Student::PassportInfo < ApplicationRecord
   validates :birth_country, length: {maximum:50}
 
   def invalid_expiration
-  	if self.release and self.expiration and self.release > self.expiration
+  	if self.release and self.expiration and self.release.to_date > self.expiration.to_date
   		errors[:base] << "Release can't be greater than expiration"
   	end
   end
