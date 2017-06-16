@@ -4,5 +4,6 @@ class Volunteer < User
 
   def send_accepted
     UserAuthMailer.send_welcome(self)
+    self.email_activate
   end
 end
