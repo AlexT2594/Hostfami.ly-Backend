@@ -31,7 +31,7 @@ RSpec.describe UsersController, type: :controller do
 				test_user=FactoryGirl.create(:student)
 				get :confirm_email, params:  {tk: test_user.confirm_token}
 				#print json
-				expect(json["result"]).to be == "success"
+				expect(json["result"]).to be == "Success"
 			end
 		end
 
@@ -40,7 +40,7 @@ RSpec.describe UsersController, type: :controller do
 				test_user=FactoryGirl.create(:student)
 				get :confirm_email, params:  {tk: 1}
 				#print json
-				expect(json["result"]).to be == "error"
+				expect(json["errors"][0]).to be == "Error activating email"
 			end
 		end
 	end
