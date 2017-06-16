@@ -56,9 +56,11 @@ class RequestController < ApplicationController
 
     if !r
       render json: { errors: ["Requests not found"] }
-    else
+    elsif @current_user.volunteer?
       requests = r.where(status: params[:status]).page(params[:page])
       render json: { requests: requests, total_pages: requests.total_pages }
+    else
+      render json: { errors: ["Not allowed"]}
     end
   end
 
@@ -87,7 +89,7 @@ class RequestController < ApplicationController
     request = Request.find_by(id: params[:id])
   	if !request
   		render json: {errors:["We couldn't find a matching request"]}
-    else
+    elsif @current_user.volunteer?
       if request.update_attributes(req_params)
         receiver = nil
         if request.student
@@ -95,12 +97,12 @@ class RequestController < ApplicationController
         else
           receiver = request.family
         end
-        if @current_user.volunteer? and params[:request][:status] == "accepted"
+        if params[:request][:status] == "accepted"
           RequestNotificationMailer.send_accepted_notification(receiver).deliver_later if receiver.email_notification
-          SmsNotification.send_sms('+393202237655','accepted') if request.student.sms_notification
-        elsif @current_user.volunteer? and params[:request][:status] == "rejected"
+          SmsNotification.send_sms('+393202237655','accepted') if receiver.sms_notification
+        elsif params[:request][:status] == "rejected"
           RequestNotificationMailer.send_rejected_notification(receiver).deliver_later if receiver.email_notification
-          SmsNotification.send_sms('+393202237655','rejected') if request.student.sms_notification
+          SmsNotification.send_sms('+393202237655','rejected') if receiver.sms_notification
         end
       	render json: {result:"Request updated successfully"}
       else
@@ -112,16 +114,22 @@ class RequestController < ApplicationController
   def destroy
   	if !Request.exists?(params[:id])
   		render json: {errors:["Request not found"]}
-  	else
+  	elsif @current_user.volunteer?
   		request = Request.find(params[:id])
   		request.destroy
   		render json: {result:"Request deleted"}
-  	end
+    else
+      render json: {errors: ["Not allowed"]}
+    end
   end
 
   def incoming_students
-    res = Request.where(status: "accepted", student_state: @current_user.state).page(params[:page])
-    render json: { requests: res, total_pages: res.total_pages }
+    if @current_user.volunteer?
+      res = Request.where(status: "accepted", student_state: @current_user.state).page(params[:page])
+      render json: { requests: res, total_pages: res.total_pages }
+    else
+      render json: { errors: ["Not allowed"]}
+    end
   end
 
   private
