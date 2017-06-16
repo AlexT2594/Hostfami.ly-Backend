@@ -39,10 +39,10 @@ class RequestController < ApplicationController
       if req
         render json: { result: req }
       else
-        render json: { error: "No request found"}
+        render json: { errors: ["No request found"]}
       end
     else
-      render json: { error: "Vols don't have requests"}
+      render json: { errors: "Vols don't have requests"}
     end
   end
 
